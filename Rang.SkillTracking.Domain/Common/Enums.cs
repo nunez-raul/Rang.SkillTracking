@@ -14,4 +14,14 @@ namespace Rang.SkillTracking.Domain.Common
         InvalidArabicSymbol,
         DuplicatedSymbol
     }
+
+    public enum SkillLevel
+    {
+        NotSet,
+        Learning,
+        CanWorkAloneWhenProvidedWithADesign,
+        CanMakeDesignDecisions,
+        CanDesignAnApplication,
+        CanDesignASolution
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rang.SkillTracking.Domain.Employees;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,8 +12,13 @@ namespace Rang.SkillTracking.Domain.Skills
         // fields
 
         // properties
+        public Employee Employee { get; private set; }
 
         // constructors
+        public Evaluatee(Employee employee)
+        {
+            Employee = employee ?? throw new ArgumentNullException(nameof(employee));
+        }
 
         // methods
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rang.SkillTracking.Domain.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,8 @@ namespace Rang.SkillTracking.Domain.Skills
         // fields
 
         // properties
+        public PersonalSkill PersonalSkill { get; private set; }
+        public SkillLevel TargetSkillLevel { get; private set; }
         public Evaluation Evaluation { get; private set; }
         public EvaluationPeriod EvaluationPeriod { get; private set; }
         public Evaluatee Evaluatee { get; private set; }
@@ -18,14 +21,18 @@ namespace Rang.SkillTracking.Domain.Skills
         public SkillScore SkillScore { get; private set; }
 
         // constructors
-        public SkillGoal(Evaluation evaluation, SkillEvaluator skillEvaluator)
+        public SkillGoal(Skill skill, SkillEvaluator skillEvaluator, SkillLevel targetSkillLevel, Evaluation evaluation)
         {
-            Evaluation = evaluation ?? throw new ArgumentNullException(nameof(evaluation));
+            if(skill == null)
+                throw new ArgumentNullException(nameof(skill));
 
-            EvaluationPeriod = evaluation.EvaluationPeriod;
-            Evaluatee = evaluation.Evaluatee;
-            SkillEvaluator = skillEvaluator ?? throw new ArgumentNullException(nameof(skillEvaluator));
+            Evaluation = evaluation ?? throw new ArgumentNullException(nameof(evaluation));
+            Evaluatee = Evaluation.Evaluatee;
             SkillScore = new SkillScore();
+            PersonalSkill = new PersonalSkill(skill, Evaluatee.Employee.Profile);
+            TargetSkillLevel = targetSkillLevel;
+            EvaluationPeriod = evaluation.EvaluationPeriod;
+            SkillEvaluator = skillEvaluator ?? throw new ArgumentNullException(nameof(skillEvaluator));
         }
 
         // methods

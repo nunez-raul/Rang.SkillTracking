@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
@@ -28,9 +26,9 @@ namespace Rang.SkillTracking.Domain.Skills
         }
 
         // methods
-        public OperationStatusCode AddNewSkillGoal(SkillEvaluator skillEvaluator)
+        public OperationStatusCode AddNewSkillGoal(Skill skill, SkillEvaluator skillEvaluator, SkillLevel targetSkillLevel)
         {
-            var newSkillGoal = new SkillGoal(this, skillEvaluator);
+            var newSkillGoal = new SkillGoal(skill, skillEvaluator, targetSkillLevel, this);
             _skillGoals.Add(newSkillGoal);
 
             return OperationStatusCode.Success;
