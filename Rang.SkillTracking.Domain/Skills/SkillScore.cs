@@ -11,8 +11,13 @@ namespace Rang.SkillTracking.Domain.Skills
         // fields
 
         // properties
+        public SkillGoal SkillGoal { get; private set; }
 
         // constructors
+        public SkillScore(SkillGoal skillGoal)
+        {
+            SkillGoal = skillGoal ?? throw new ArgumentNullException(nameof(skillGoal));
+        }
 
         // methods
     }

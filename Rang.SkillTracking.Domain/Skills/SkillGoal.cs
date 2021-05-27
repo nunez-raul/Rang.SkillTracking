@@ -28,7 +28,7 @@ namespace Rang.SkillTracking.Domain.Skills
 
             Evaluation = evaluation ?? throw new ArgumentNullException(nameof(evaluation));
             Evaluatee = Evaluation.Evaluatee;
-            SkillScore = new SkillScore();
+            SkillScore = new SkillScore(this);
             PersonalSkill = new PersonalSkill(skill, Evaluatee.Employee.Profile);
             TargetSkillLevel = targetSkillLevel;
             EvaluationPeriod = evaluation.EvaluationPeriod;
