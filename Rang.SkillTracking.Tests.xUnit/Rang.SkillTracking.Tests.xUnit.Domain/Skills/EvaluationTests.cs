@@ -17,7 +17,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             var skillEvaluator = new Employee().SkillEvaluator;
 
             // act
-            var result = evaluation.AddNewSkillGoal(skill, skillEvaluator, SkillLevel.CanMakeDesignDecisions);
+            var result = evaluation.AddNewSkillGoal(skill, skillEvaluator, SkillLevel.Advanced);
 
             // assert
             Assert.Equal(OperationStatusCode.Success, result);
@@ -32,7 +32,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             var skillEvaluator = new Employee().SkillEvaluator;
 
             // act
-            void action() => evaluation.AddNewSkillGoal(null, skillEvaluator, SkillLevel.CanMakeDesignDecisions);
+            void action() => evaluation.AddNewSkillGoal(null, skillEvaluator, SkillLevel.Advanced);
 
             // assert
             Assert.Throws<ArgumentNullException>(action);
@@ -46,7 +46,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             var skill = new Skill("C#");
 
             // act
-            void action() => evaluation.AddNewSkillGoal(skill, null, SkillLevel.CanMakeDesignDecisions);
+            void action() => evaluation.AddNewSkillGoal(skill, null, SkillLevel.Advanced);
 
             // assert
             Assert.Throws<ArgumentNullException>(action);

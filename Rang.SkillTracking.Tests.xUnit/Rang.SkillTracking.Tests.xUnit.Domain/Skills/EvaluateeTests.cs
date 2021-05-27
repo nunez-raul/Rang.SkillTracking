@@ -20,6 +20,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
 
             // assert
             Assert.Equal(OperationStatusCode.Success, result);
+            Assert.Single(evaluatee.Evaluations);
         }
 
         [Fact]

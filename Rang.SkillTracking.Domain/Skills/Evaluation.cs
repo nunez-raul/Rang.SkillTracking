@@ -13,16 +13,14 @@ namespace Rang.SkillTracking.Domain.Skills
         // properties
         public Evaluatee Evaluatee {get; private set;}
         public EvaluationPeriod EvaluationPeriod { get; private set; } 
-        public IEnumerable<SkillGoal> SkillGoals { get { return _skillGoals; }}
+        public IEnumerable<SkillGoal> SkillGoals { get => _skillGoals; }
 
         // constructors
-        public Evaluation(Evaluatee evaluatee, EvaluationPeriod evaluationPeriod, SkillGoal[] skillGoals = null)
+        public Evaluation(Evaluatee evaluatee, EvaluationPeriod evaluationPeriod)
         {
             Evaluatee = evaluatee ?? throw new ArgumentNullException(nameof(evaluatee));
             EvaluationPeriod = evaluationPeriod ?? throw new ArgumentNullException(nameof(evaluationPeriod));
-            _skillGoals = skillGoals == null 
-                ? new List<SkillGoal>() 
-                : skillGoals.ToList();
+            _skillGoals = new List<SkillGoal>();
         }
 
         // methods

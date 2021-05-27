@@ -18,10 +18,10 @@ namespace Rang.SkillTracking.Domain.Common
     public enum SkillLevel
     {
         NotSet,
-        Learning,
-        CanWorkAloneWhenProvidedWithADesign,
-        CanMakeDesignDecisions,
-        CanDesignAnApplication,
-        CanDesignASolution
+        Noob,
+        Average,
+        Advanced,
+        Expert,
+        Guru
     }
 }
