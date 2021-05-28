@@ -25,8 +25,10 @@ namespace Rang.SkillTracking.Domain.Skills
         }
 
         // methods
-        public OperationStatusCode SetSkillScore(SkillGoal skillGoal, int score, string note)
+        public OperationStatusCode SetSkillScore(SkillGoal skillGoal, SkillLevel currentSkillLevel , int score, string note)
         {
+            skillGoal.PersonalSkill.SetSkillLevel(currentSkillLevel);
+
             _skillGoals.Add(skillGoal);
 
             var skillScore = skillGoal.SkillScore;

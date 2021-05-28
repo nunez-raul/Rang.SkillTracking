@@ -18,7 +18,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             var skillGoal = new SkillGoal(skill, skillEvaluator, SkillLevel.Advanced, new Evaluation(evaluatee, new EvaluationPeriod()));
 
             // act
-            var result = skillEvaluator.SetSkillScore(skillGoal, 10, "Excelsior!!!");
+            var result = skillEvaluator.SetSkillScore(skillGoal,SkillLevel.Expert, 10, "Excelsior!!!");
 
             // assert
             Assert.Equal(OperationStatusCode.Success, result);

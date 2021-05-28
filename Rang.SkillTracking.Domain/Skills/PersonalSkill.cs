@@ -1,9 +1,6 @@
-﻿using Rang.SkillTracking.Domain.Employees;
+﻿using Rang.SkillTracking.Domain.Common;
+using Rang.SkillTracking.Domain.Employees;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
@@ -14,6 +11,7 @@ namespace Rang.SkillTracking.Domain.Skills
         // properties
         public Skill Skill { get; private set; }
         public PersonalProfile Profile { get; private set; }
+        public SkillLevel SkillLevel { get; private set; }
 
         // constructors
         public PersonalSkill(Skill skill, PersonalProfile profile)
@@ -23,5 +21,11 @@ namespace Rang.SkillTracking.Domain.Skills
         }
 
         // methods
+        public OperationStatusCode SetSkillLevel(SkillLevel skillLevel)
+        {
+            SkillLevel = skillLevel;
+
+            return OperationStatusCode.Success;
+        }
     }
 }
