@@ -38,5 +38,22 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             Assert.Equal(OperationStatusCode.Success, result);
             Assert.Single(skillEvaluator.TrackingPoints);
         }
+
+        [Fact]
+        public void ShouldAddNewSkillSnapshot()
+        {
+            // arrange
+            var skillEvaluator = new Employee().SkillEvaluator;
+            var skill = new Skill("C#");
+            var personalSkill = new PersonalSkill(skill, new Employee().Profile);
+            var trackingPoint = new TrackingPoint(skillEvaluator, new EvaluationPeriod(), DateTime.Today);
+
+            // act
+            var result = skillEvaluator.AddNewSkillSnapshot(personalSkill, trackingPoint);
+
+            // assert
+            Assert.Equal(OperationStatusCode.Success, result);
+            Assert.Single(trackingPoint.SkillSnapshots);
+        }
     }
 }

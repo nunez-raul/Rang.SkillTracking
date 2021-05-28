@@ -44,5 +44,12 @@ namespace Rang.SkillTracking.Domain.Skills
 
             return OperationStatusCode.Success;
         }
+
+        public OperationStatusCode AddNewSkillSnapshot(PersonalSkill personalSkill, TrackingPoint trackingPoint)
+        {
+            trackingPoint.AddNewSkillSnapshot(personalSkill);
+
+            return OperationStatusCode.Success;
+        }
     }
 }
