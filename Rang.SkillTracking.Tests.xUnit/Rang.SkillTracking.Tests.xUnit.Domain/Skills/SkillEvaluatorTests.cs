@@ -1,6 +1,7 @@
 ﻿using Rang.SkillTracking.Domain.Common;
 using Rang.SkillTracking.Domain.Employees;
 using Rang.SkillTracking.Domain.Skills;
+using System;
 using Xunit;
 
 namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.Skills
@@ -22,6 +23,20 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             // assert
             Assert.Equal(OperationStatusCode.Success, result);
             Assert.Equal(10, skillGoal.SkillScore.Score);
+        }
+
+        [Fact]
+        public void ShouldAddNewTrackingPoint()
+        {
+            // arrange
+            var skillEvaluator = new Employee().SkillEvaluator;
+
+            // act
+            var result = skillEvaluator.AddNewTrackingPoint(new EvaluationPeriod(), DateTime.Today);
+
+            // assert
+            Assert.Equal(OperationStatusCode.Success, result);
+            Assert.Single(skillEvaluator.TrackingPoints);
         }
     }
 }
