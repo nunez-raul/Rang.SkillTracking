@@ -2,6 +2,7 @@
 using Rang.SkillTracking.Domain.Employees;
 using Rang.SkillTracking.Domain.Skills;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.Skills
@@ -12,17 +13,19 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
         public void ShouldSetSkillScore()
         {
             // arrange
+            var evaluationPeriod = new EvaluationPeriod();
             var skillEvaluator = new Employee().SkillEvaluator;
             var skill = new Skill("C#");
             var evaluatee = new Employee().Evaluatee;
-            var skillGoal = new SkillGoal(skill, skillEvaluator, SkillLevel.Advanced, new Evaluation(evaluatee, new EvaluationPeriod()));
+            var evaluation = new Evaluation(evaluatee, evaluationPeriod);
+            new SkillGoal(skill, skillEvaluator, SkillLevel.Expert, SkillLevel.Advanced, evaluation);
 
             // act
-            var result = skillEvaluator.SetSkillScore(skillGoal,SkillLevel.Expert, 10, "Excelsior!!!");
+            var result = skillEvaluator.SetSkillScore(evaluatee, skill, evaluationPeriod, SkillLevel.Advanced, 10, "Excelsior!!!");
 
             // assert
             Assert.Equal(OperationStatusCode.Success, result);
-            Assert.Equal(10, skillGoal.SkillScore.Score);
+            Assert.Equal(10, skillEvaluator.SkillGoals.First().SkillScore.Score);
         }
 
         [Fact]
@@ -45,15 +48,15 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             // arrange
             var skillEvaluator = new Employee().SkillEvaluator;
             var skill = new Skill("C#");
-            var personalSkill = new PersonalSkill(skill, new Employee().Profile);
-            var trackingPoint = new TrackingPoint(skillEvaluator, new EvaluationPeriod(), DateTime.Today);
+            var evaluatee = new Employee().Evaluatee;
+            skillEvaluator.AddNewTrackingPoint(new EvaluationPeriod(), DateTime.Today);
 
             // act
-            var result = skillEvaluator.AddNewSkillSnapshot(personalSkill, trackingPoint);
+            var result = skillEvaluator.AddNewSkillSnapshot(evaluatee, skill, SkillLevel.Noob, DateTime.Today);
 
             // assert
             Assert.Equal(OperationStatusCode.Success, result);
-            Assert.Single(trackingPoint.SkillSnapshots);
+            Assert.Single(skillEvaluator.TrackingPoints.First().SkillSnapshots);
         }
     }
 }

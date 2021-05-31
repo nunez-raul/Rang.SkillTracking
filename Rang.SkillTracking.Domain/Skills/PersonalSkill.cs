@@ -14,9 +14,11 @@ namespace Rang.SkillTracking.Domain.Skills
         public SkillLevel SkillLevel { get; private set; }
 
         // constructors
-        public PersonalSkill(Skill skill, PersonalProfile profile)
+        public PersonalSkill(Skill skill, SkillLevel currentSkillLevel, PersonalProfile profile)
         {
             Skill = skill ?? throw new ArgumentNullException(nameof(skill));
+            SkillLevel = currentSkillLevel;
+
             Profile = profile ?? throw new ArgumentNullException(nameof(profile));
         }
 

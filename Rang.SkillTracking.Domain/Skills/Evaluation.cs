@@ -1,7 +1,6 @@
 ﻿using Rang.SkillTracking.Domain.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
@@ -21,12 +20,23 @@ namespace Rang.SkillTracking.Domain.Skills
             Evaluatee = evaluatee ?? throw new ArgumentNullException(nameof(evaluatee));
             EvaluationPeriod = evaluationPeriod ?? throw new ArgumentNullException(nameof(evaluationPeriod));
             _skillGoals = new List<SkillGoal>();
+
+            Evaluatee.AddNewEvaluation(this);
         }
 
         // methods
-        public OperationStatusCode AddNewSkillGoal(Skill skill, SkillEvaluator skillEvaluator, SkillLevel targetSkillLevel)
+        public OperationStatusCode AddNewSkillGoal(SkillGoal skillGoal)
         {
-            var newSkillGoal = new SkillGoal(skill, skillEvaluator, targetSkillLevel, this);
+            if (skillGoal == null)
+                throw new ArgumentNullException(nameof(skillGoal));
+            _skillGoals.Add(skillGoal);
+
+            return OperationStatusCode.Success;
+        }
+
+        public OperationStatusCode AddNewSkillGoal(Skill skill, SkillEvaluator skillEvaluator, SkillLevel targetSkillLevel, SkillLevel currentSkillLevel)
+        {
+            var newSkillGoal = new SkillGoal(skill, skillEvaluator, targetSkillLevel, currentSkillLevel, this);
             _skillGoals.Add(newSkillGoal);
 
             return OperationStatusCode.Success;

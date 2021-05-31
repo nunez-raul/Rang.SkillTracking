@@ -21,7 +21,7 @@ namespace Rang.SkillTracking.Domain.Skills
         public SkillScore SkillScore { get; private set; }
 
         // constructors
-        public SkillGoal(Skill skill, SkillEvaluator skillEvaluator, SkillLevel targetSkillLevel, Evaluation evaluation)
+        public SkillGoal(Skill skill, SkillEvaluator skillEvaluator, SkillLevel targetSkillLevel, SkillLevel currentSkillLevel, Evaluation evaluation)
         {
             if(skill == null)
                 throw new ArgumentNullException(nameof(skill));
@@ -29,10 +29,13 @@ namespace Rang.SkillTracking.Domain.Skills
             Evaluation = evaluation ?? throw new ArgumentNullException(nameof(evaluation));
             Evaluatee = Evaluation.Evaluatee;
             SkillScore = new SkillScore(this);
-            PersonalSkill = new PersonalSkill(skill, Evaluatee.Employee.Profile);
+            PersonalSkill = new PersonalSkill(skill, currentSkillLevel, Evaluatee.Employee.Profile);
             TargetSkillLevel = targetSkillLevel;
             EvaluationPeriod = evaluation.EvaluationPeriod;
             SkillEvaluator = skillEvaluator ?? throw new ArgumentNullException(nameof(skillEvaluator));
+
+            Evaluation.AddNewSkillGoal(this);
+            SkillEvaluator.AddNewSkillGoal(this);
         }
 
         // methods
