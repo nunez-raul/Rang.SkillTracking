@@ -76,24 +76,56 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             Assert.Empty(skillEvaluator.TrackingPoints);
         }
 
+
         [Fact]
-        public void ShouldSetSkillScore()
+        public void ShouldThrowArgumentNullExceptionWhenSetSkillScoreToSkillGoalIfGoalIsNull()
         {
             // arrange
             var skillEvaluator = new Employee().SkillEvaluator;
-            
-            var evaluatee = new Employee().Evaluatee;
-            var evaluationPeriod = new EvaluationPeriod();
-            evaluatee.AddNewEvaluation(evaluationPeriod);
-            var evaluation = evaluatee.Evaluations.First();
 
+            // act
+            var skillLevelAchieved = SkillLevel.Advanced;
+            void action() => skillEvaluator.SetSkillScoreToSkillGoal(null, skillLevelAchieved, 10, "Excelsior!!!");
+
+            // assert
+            Assert.Throws<ArgumentNullException>(action);
+        }
+
+        [Fact]
+        public void ShouldReturnMissingGoalWhenSetSkillScoreToSkillGoalIfGoalIsNotFound()
+        {
+            // arrange
+            var skillEvaluator = new Employee().SkillEvaluator;
             var skill = new Skill("C#");
-            var skillGoal = new SkillGoal(skill, skillEvaluator, SkillLevel.Expert, SkillLevel.Advanced, evaluation);
-            evaluation.AddNewSkillGoal(skillGoal);
+            var targetLevel = SkillLevel.Advanced;
+            var currentLevel = SkillLevel.Average;
+            var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod());
+            var skillGoal = new SkillGoal(skill, skillEvaluator, targetLevel, currentLevel, evaluation);
+
+            // act
+            var skillLevelAchieved = SkillLevel.Advanced;
+            var result = skillEvaluator.SetSkillScoreToSkillGoal(skillGoal, skillLevelAchieved, 10, "Excelsior!!!");
+
+            // assert
+            Assert.Equal(OperationStatusCode.MissingSkillGoal, result);
+            Assert.Empty(skillEvaluator.SkillGoals);
+        }
+
+        [Fact]
+        public void ShouldSetSkillScoreToExistingSkillGoal()
+        {
+            // arrange
+            var skillEvaluator = new Employee().SkillEvaluator;
+            var skill = new Skill("C#");
+            var targetLevel = SkillLevel.Advanced;
+            var currentLevel = SkillLevel.Average;
+            var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod());
+            var skillGoal = new SkillGoal(skill, skillEvaluator, targetLevel, currentLevel, evaluation);
             skillEvaluator.AddNewSkillGoal(skillGoal);
 
             // act
-            var result = skillEvaluator.SetSkillScore(evaluatee, skill, evaluationPeriod, SkillLevel.Advanced, 10, "Excelsior!!!");
+            var skillLevelAchieved = SkillLevel.Advanced;
+            var result = skillEvaluator.SetSkillScoreToSkillGoal(skillGoal, skillLevelAchieved, 10, "Excelsior!!!");
 
             // assert
             Assert.Equal(OperationStatusCode.Success, result);

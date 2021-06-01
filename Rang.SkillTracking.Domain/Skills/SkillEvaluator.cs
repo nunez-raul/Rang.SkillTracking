@@ -59,7 +59,23 @@ namespace Rang.SkillTracking.Domain.Skills
             return OperationStatusCode.Success;
         }
 
-        public OperationStatusCode SetSkillScore(Evaluatee evaluatee, Skill skill, EvaluationPeriod evaluationperiod, SkillLevel currentSkillLevel, int score, string note)
+        public OperationStatusCode SetSkillScoreToSkillGoal(SkillGoal skillGoal, SkillLevel skillLevelAchieved, int score, string note)
+        {
+            if (skillGoal == null)
+                throw new ArgumentNullException(nameof(skillGoal));
+
+            if (_skillGoals.Where(sg => sg.Id == skillGoal.Id).SingleOrDefault() == null)
+                return OperationStatusCode.MissingSkillGoal;
+
+            skillGoal.InitialSkillLevel.SetSkillLevel(skillLevelAchieved);
+            var skillScore = skillGoal.SkillScore;
+            skillScore.Score = score;
+            skillScore.AddNote(note);
+
+            return OperationStatusCode.Success;
+        }
+
+        public OperationStatusCode SetSkillScore(Evaluatee evaluatee, Skill skill, EvaluationPeriod evaluationperiod, SkillLevel skillLevelAchieved, int score, string note)
         {
             var evaluation = evaluatee.Evaluations
                 .Where(e => e.EvaluationPeriod.Equals(evaluationperiod))
@@ -71,7 +87,7 @@ namespace Rang.SkillTracking.Domain.Skills
             }
 
             var skillGoal = evaluation.SkillGoals
-                .Where(sg => sg.PersonalSkill.Skill.Equals(skill))
+                .Where(sg => sg.InitialSkillLevel.Skill.Equals(skill))
                 .FirstOrDefault();
 
             if (skillGoal == null)
@@ -79,7 +95,7 @@ namespace Rang.SkillTracking.Domain.Skills
                 throw new NotImplementedException();
             }
 
-            skillGoal.PersonalSkill.SetSkillLevel(currentSkillLevel);
+            skillGoal.InitialSkillLevel.SetSkillLevel(skillLevelAchieved);
 
             _skillGoals.Add(skillGoal);
 

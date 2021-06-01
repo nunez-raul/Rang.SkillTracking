@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class SkillGoal
+    public class SkillGoal: BaseEntity
     {
         // fields
 
         // properties
-        public PersonalSkill PersonalSkill { get; private set; }
+        public PersonalSkill InitialSkillLevel { get; private set; }
         public SkillLevel TargetSkillLevel { get; private set; }
         public Evaluation Evaluation { get; private set; }
         public EvaluationPeriod EvaluationPeriod { get; private set; }
@@ -22,6 +22,7 @@ namespace Rang.SkillTracking.Domain.Skills
 
         // constructors
         public SkillGoal(Skill skill, SkillEvaluator skillEvaluator, SkillLevel targetSkillLevel, SkillLevel currentSkillLevel, Evaluation evaluation)
+            :base()
         {
             if(skill == null)
                 throw new ArgumentNullException(nameof(skill));
@@ -29,7 +30,7 @@ namespace Rang.SkillTracking.Domain.Skills
             Evaluation = evaluation ?? throw new ArgumentNullException(nameof(evaluation));
             Evaluatee = Evaluation.Evaluatee;
             SkillScore = new SkillScore(this);
-            PersonalSkill = new PersonalSkill(skill, currentSkillLevel, Evaluatee.Employee.Profile);
+            InitialSkillLevel = new PersonalSkill(skill, currentSkillLevel, Evaluatee.Employee.Profile);
             TargetSkillLevel = targetSkillLevel;
             EvaluationPeriod = evaluation.EvaluationPeriod;
             SkillEvaluator = skillEvaluator ?? throw new ArgumentNullException(nameof(skillEvaluator));

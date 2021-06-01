@@ -10,7 +10,8 @@ namespace Rang.SkillTracking.Domain.Common
     {
         NotSet,
         Success,
-        MissingTrackingPoint
+        MissingTrackingPoint,
+        MissingSkillGoal
     }
 
     public enum SkillLevel
