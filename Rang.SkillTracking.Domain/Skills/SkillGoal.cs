@@ -33,9 +33,6 @@ namespace Rang.SkillTracking.Domain.Skills
             TargetSkillLevel = targetSkillLevel;
             EvaluationPeriod = evaluation.EvaluationPeriod;
             SkillEvaluator = skillEvaluator ?? throw new ArgumentNullException(nameof(skillEvaluator));
-
-            Evaluation.AddNewSkillGoal(this);
-            SkillEvaluator.AddNewSkillGoal(this);
         }
 
         // methods

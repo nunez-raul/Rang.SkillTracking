@@ -13,10 +13,10 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
         {
             // arrange
             var evaluatee = new Employee().Evaluatee;
-            var evaluation = new Evaluation(evaluatee, new EvaluationPeriod());
+            var evaluationPeriod = new EvaluationPeriod();
 
             // act
-            var result = evaluatee.AddNewEvaluation(evaluation);
+            var result = evaluatee.AddNewEvaluation(evaluationPeriod);
 
             // assert
             Assert.Equal(OperationStatusCode.Success, result);

@@ -26,38 +26,6 @@ namespace Rang.SkillTracking.Domain.Skills
         }
 
         // methods
-        public OperationStatusCode SetSkillScore(Evaluatee evaluatee, Skill skill, EvaluationPeriod evaluationperiod, SkillLevel currentSkillLevel , int score, string note)
-        {
-            var evaluation = evaluatee.Evaluations
-                .Where(e => e.EvaluationPeriod.Equals(evaluationperiod))
-                .FirstOrDefault();
-
-            if (evaluation == null)
-            {
-                throw new NotImplementedException();
-            }
-
-            var skillGoal = evaluation.SkillGoals
-                .Where(sg => sg.PersonalSkill.Skill.Equals(skill))
-                .FirstOrDefault();
-
-            if(skillGoal == null)
-            {
-                throw new NotImplementedException();
-            }
-
-            skillGoal.PersonalSkill.SetSkillLevel(currentSkillLevel);
-
-            _skillGoals.Add(skillGoal);
-
-            var skillScore = skillGoal.SkillScore;
-            skillScore.Score = score;
-            skillScore.AddNote(note);
-            
-
-            return OperationStatusCode.Success;
-        }
-
         public OperationStatusCode AddNewSkillGoal(SkillGoal skillGoal)
         {
             if (skillGoal == null)
@@ -76,16 +44,52 @@ namespace Rang.SkillTracking.Domain.Skills
             return OperationStatusCode.Success;
         }
 
-        public OperationStatusCode AddNewSkillSnapshot(Evaluatee evaluatee, Skill skill, SkillLevel currentSkillLevel, DateTime date)
+        public OperationStatusCode AddNewSkillSnapshotToTrackingPoint(Evaluatee evaluatee, Skill skill, SkillLevel currentSkillLevel, DateTime date)
         {
             var trackingPoint =  _trackingPoints
                 .Where(Tp => Tp.Date.Date.Equals(date.Date))
                 .SingleOrDefault();
-            
+
+            if (trackingPoint == null)
+                return OperationStatusCode.MissingTrackingPoint;
+
             trackingPoint.AddNewSkillSnapshot(
                 new PersonalSkill(skill, currentSkillLevel, evaluatee.Employee.Profile));
 
             return OperationStatusCode.Success;
         }
+
+        public OperationStatusCode SetSkillScore(Evaluatee evaluatee, Skill skill, EvaluationPeriod evaluationperiod, SkillLevel currentSkillLevel, int score, string note)
+        {
+            var evaluation = evaluatee.Evaluations
+                .Where(e => e.EvaluationPeriod.Equals(evaluationperiod))
+                .FirstOrDefault();
+
+            if (evaluation == null)
+            {
+                throw new NotImplementedException();
+            }
+
+            var skillGoal = evaluation.SkillGoals
+                .Where(sg => sg.PersonalSkill.Skill.Equals(skill))
+                .FirstOrDefault();
+
+            if (skillGoal == null)
+            {
+                throw new NotImplementedException();
+            }
+
+            skillGoal.PersonalSkill.SetSkillLevel(currentSkillLevel);
+
+            _skillGoals.Add(skillGoal);
+
+            var skillScore = skillGoal.SkillScore;
+            skillScore.Score = score;
+            skillScore.AddNote(note);
+
+
+            return OperationStatusCode.Success;
+        }
+
     }
 }

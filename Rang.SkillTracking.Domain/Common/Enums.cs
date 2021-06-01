@@ -10,9 +10,7 @@ namespace Rang.SkillTracking.Domain.Common
     {
         NotSet,
         Success,
-        MissingRomanSymbol,
-        InvalidArabicSymbol,
-        DuplicatedSymbol
+        MissingTrackingPoint
     }
 
     public enum SkillLevel

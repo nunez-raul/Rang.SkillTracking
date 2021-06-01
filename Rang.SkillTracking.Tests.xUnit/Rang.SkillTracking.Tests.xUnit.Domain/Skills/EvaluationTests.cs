@@ -2,6 +2,7 @@
 using Rang.SkillTracking.Domain.Employees;
 using Rang.SkillTracking.Domain.Skills;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.Skills

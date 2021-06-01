@@ -20,8 +20,6 @@ namespace Rang.SkillTracking.Domain.Skills
             Evaluatee = evaluatee ?? throw new ArgumentNullException(nameof(evaluatee));
             EvaluationPeriod = evaluationPeriod ?? throw new ArgumentNullException(nameof(evaluationPeriod));
             _skillGoals = new List<SkillGoal>();
-
-            Evaluatee.AddNewEvaluation(this);
         }
 
         // methods

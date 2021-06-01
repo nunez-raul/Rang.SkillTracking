@@ -27,12 +27,13 @@ namespace Rang.SkillTracking.Domain.Skills
         }
 
         // methods
-        public OperationStatusCode AddNewEvaluation(Evaluation evaluation)
+        public OperationStatusCode AddNewEvaluation(EvaluationPeriod evaluationPeriod)
         {
-            if (evaluation == null)
-                throw new ArgumentNullException(nameof(evaluation));
+            if (evaluationPeriod == null)
+                throw new ArgumentNullException(nameof(evaluationPeriod));
 
-            _evaluations.Add(evaluation);
+            _evaluations.Add(new Evaluation(this, evaluationPeriod));
+            
             return OperationStatusCode.Success;
         }
     }
