@@ -10,6 +10,19 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
     public class SkillEvaluatorTests
     {
         [Fact]
+        public void ShouldThrowArgumentNullExceptionWhenAddNewSkillGoalIfGoalIsNull()
+        {
+            // arrange
+            var skillEvaluator = new Employee().SkillEvaluator;
+
+            // act
+            void action() => skillEvaluator.AddNewSkillGoal(null);
+
+            // assert
+            Assert.Throws<ArgumentNullException>(action);
+        }
+
+        [Fact]
         public void ShouldAddNewSkillGoal()
         {
             // arrange
@@ -18,7 +31,9 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             var evaluatee = new Employee().Evaluatee;
             var evaluationPeriod = new EvaluationPeriod();
             var evaluation = new Evaluation(evaluatee, evaluationPeriod);
-            var skillGoal = new SkillGoal(skill, skillEvaluator, SkillLevel.Expert, SkillLevel.Advanced, evaluation);
+            var targetLevel = SkillLevel.Advanced;
+            var currentLevel = SkillLevel.Average;
+            var skillGoal = new SkillGoal(skill, skillEvaluator, targetLevel, currentLevel, evaluation);
 
             // act
             var result = skillEvaluator.AddNewSkillGoal(skillGoal);
@@ -26,6 +41,19 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             // assert
             Assert.Equal(OperationStatusCode.Success, result);
             Assert.Single(skillEvaluator.SkillGoals);
+        }
+
+        [Fact]
+        public void ShouldThrowArgumentNullExceptionWhenAddNewTrackingPointIfPeriodIsNull()
+        {
+            // arrange
+            var skillEvaluator = new Employee().SkillEvaluator;
+
+            // act
+            void action() => skillEvaluator.AddNewTrackingPoint(null, DateTime.Today);
+
+            // assert
+            Assert.Throws<ArgumentNullException>(action);
         }
 
         [Fact]
@@ -97,9 +125,11 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             // arrange
             var skillEvaluator = new Employee().SkillEvaluator;
             var skill = new Skill("C#");
+            var evaluatee = new Employee().Evaluatee;
+            var evaluationPeriod = new EvaluationPeriod();
+            var evaluation = new Evaluation(evaluatee, evaluationPeriod);
             var targetLevel = SkillLevel.Advanced;
             var currentLevel = SkillLevel.Average;
-            var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod());
             var skillGoal = new SkillGoal(skill, skillEvaluator, targetLevel, currentLevel, evaluation);
 
             // act
@@ -117,9 +147,11 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             // arrange
             var skillEvaluator = new Employee().SkillEvaluator;
             var skill = new Skill("C#");
+            var evaluatee = new Employee().Evaluatee;
+            var evaluationPeriod = new EvaluationPeriod();
+            var evaluation = new Evaluation(evaluatee, evaluationPeriod);
             var targetLevel = SkillLevel.Advanced;
             var currentLevel = SkillLevel.Average;
-            var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod());
             var skillGoal = new SkillGoal(skill, skillEvaluator, targetLevel, currentLevel, evaluation);
             skillEvaluator.AddNewSkillGoal(skillGoal);
 
