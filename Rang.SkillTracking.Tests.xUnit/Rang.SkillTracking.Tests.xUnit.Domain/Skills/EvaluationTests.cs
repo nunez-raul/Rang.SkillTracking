@@ -2,13 +2,40 @@
 using Rang.SkillTracking.Domain.Employees;
 using Rang.SkillTracking.Domain.Skills;
 using System;
-using System.Linq;
 using Xunit;
 
 namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.Skills
 {
     public class EvaluationTests
     {
+        [Fact]
+        public void ShouldThrowArgumentNullExceptionWhenAddNewSkillGoalWithNullSkill()
+        {
+            // arrange
+            var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod());
+            var skillEvaluator = new Employee().SkillEvaluator;
+
+            // act
+            void action() => evaluation.AddNewSkillGoal(null, skillEvaluator, SkillLevel.Advanced, SkillLevel.Average);
+
+            // assert
+            Assert.Throws<ArgumentNullException>(action);
+        }
+
+        [Fact]
+        public void ShouldThrowArgumentNullExceptionWhenAddNewSkillGoalWithNullSkillEvaluator()
+        {
+            // arrange
+            var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod());
+            var skill = new Skill("C#");
+
+            // act
+            void action() => evaluation.AddNewSkillGoal(skill, null, SkillLevel.Advanced, SkillLevel.Average);
+
+            // assert
+            Assert.Throws<ArgumentNullException>(action);
+        }
+
         [Fact]
         public void ShouldAddNewSkillGoal()
         {
@@ -23,34 +50,6 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             // assert
             Assert.Equal(OperationStatusCode.Success, result);
             Assert.Single(evaluation.SkillGoals);
-        }
-
-        [Fact]
-        public void ShouldThrowExceptionWhenAddNewSkillGoalWithNullSkill()
-        {
-            // arrange
-            var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod());
-            var skillEvaluator = new Employee().SkillEvaluator;
-
-            // act
-            void action() => evaluation.AddNewSkillGoal(null, skillEvaluator, SkillLevel.Advanced, SkillLevel.Average);
-
-            // assert
-            Assert.Throws<ArgumentNullException>(action);
-        }
-
-        [Fact]
-        public void ShouldThrowExceptionWhenAddNewSkillGoalWithNullSkillEvaluator()
-        {
-            // arrange
-            var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod());
-            var skill = new Skill("C#");
-
-            // act
-            void action() => evaluation.AddNewSkillGoal(skill, null, SkillLevel.Advanced, SkillLevel.Average);
-
-            // assert
-            Assert.Throws<ArgumentNullException>(action);
         }
     }
 }
