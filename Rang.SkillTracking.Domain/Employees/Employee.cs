@@ -19,7 +19,7 @@ namespace Rang.SkillTracking.Domain.Employees
         // constructors
         public Employee()
         {
-            Profile = new PersonalProfile();
+            Profile = new PersonalProfile(this);
             Evaluatee = new Evaluatee(this);
             SkillEvaluator = new SkillEvaluator(this);
         }

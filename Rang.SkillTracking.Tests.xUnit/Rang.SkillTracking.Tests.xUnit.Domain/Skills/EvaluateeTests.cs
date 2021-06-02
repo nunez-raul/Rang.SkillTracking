@@ -24,7 +24,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
         }
 
         [Fact]
-        public void ShouldThrowExceptionWhenAddNewEvaluationWithNullEvaluation()
+        public void ShouldThrowArgumentNullExceptionWhenAddNewEvaluationIfEvaluationIsNull()
         {
             // arrange
             var evaluatee = new Employee().Evaluatee;
