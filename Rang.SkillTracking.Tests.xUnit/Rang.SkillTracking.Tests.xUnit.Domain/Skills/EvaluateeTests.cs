@@ -9,6 +9,19 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
     public class EvaluateeTests
     {
         [Fact]
+        public void ShouldThrowArgumentNullExceptionWhenAddNewEvaluationIfEvaluationIsNull()
+        {
+            // arrange
+            var evaluatee = new Employee().Evaluatee;
+
+            // act
+            void action() => evaluatee.AddNewEvaluation(null);
+
+            // assert
+            Assert.Throws<ArgumentNullException>(action);
+        }
+
+        [Fact]
         public void ShouldAddNewEvaluation()
         {
             // arrange
@@ -21,19 +34,6 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             // assert
             Assert.Equal(OperationStatusCode.Success, result);
             Assert.Single(evaluatee.Evaluations);
-        }
-
-        [Fact]
-        public void ShouldThrowArgumentNullExceptionWhenAddNewEvaluationIfEvaluationIsNull()
-        {
-            // arrange
-            var evaluatee = new Employee().Evaluatee;
-
-            // act
-            void action() => evaluatee.AddNewEvaluation(null);
-
-            // assert
-            Assert.Throws<ArgumentNullException>(action);
         }
     }
 }

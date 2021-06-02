@@ -74,38 +74,5 @@ namespace Rang.SkillTracking.Domain.Skills
 
             return OperationStatusCode.Success;
         }
-
-        public OperationStatusCode SetSkillScore(Evaluatee evaluatee, Skill skill, EvaluationPeriod evaluationperiod, SkillLevel skillLevelAchieved, int score, string note)
-        {
-            var evaluation = evaluatee.Evaluations
-                .Where(e => e.EvaluationPeriod.Equals(evaluationperiod))
-                .FirstOrDefault();
-
-            if (evaluation == null)
-            {
-                throw new NotImplementedException();
-            }
-
-            var skillGoal = evaluation.SkillGoals
-                .Where(sg => sg.InitialSkillLevel.Skill.Equals(skill))
-                .FirstOrDefault();
-
-            if (skillGoal == null)
-            {
-                throw new NotImplementedException();
-            }
-
-            skillGoal.InitialSkillLevel.SetSkillLevel(skillLevelAchieved);
-
-            _skillGoals.Add(skillGoal);
-
-            var skillScore = skillGoal.SkillScore;
-            skillScore.Score = score;
-            skillScore.AddNote(note);
-
-
-            return OperationStatusCode.Success;
-        }
-
     }
 }

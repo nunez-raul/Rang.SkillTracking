@@ -2,10 +2,6 @@
 using Rang.SkillTracking.Domain.Employees;
 using Rang.SkillTracking.Domain.Skills;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.Employees

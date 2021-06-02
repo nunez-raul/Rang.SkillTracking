@@ -9,28 +9,32 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
     public class EvaluationTests
     {
         [Fact]
-        public void ShouldThrowArgumentNullExceptionWhenAddNewSkillGoalWithNullSkill()
+        public void ShouldThrowArgumentNullExceptionWhenAddNewSkillGoalIfSkillIsNull()
         {
             // arrange
             var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod());
             var skillEvaluator = new Employee().SkillEvaluator;
+            var targetSkillLevel = SkillLevel.Advanced;
+            var currentSkillLevel = SkillLevel.Average;
 
             // act
-            void action() => evaluation.AddNewSkillGoal(null, skillEvaluator, SkillLevel.Advanced, SkillLevel.Average);
+            void action() => evaluation.AddNewSkillGoal(null, skillEvaluator, targetSkillLevel, currentSkillLevel);
 
             // assert
             Assert.Throws<ArgumentNullException>(action);
         }
 
         [Fact]
-        public void ShouldThrowArgumentNullExceptionWhenAddNewSkillGoalWithNullSkillEvaluator()
+        public void ShouldThrowArgumentNullExceptionWhenAddNewSkillGoalIfSkillEvaluatorIsNull()
         {
             // arrange
             var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod());
             var skill = new Skill("C#");
+            var targetSkillLevel = SkillLevel.Advanced;
+            var currentSkillLevel = SkillLevel.Average;
 
             // act
-            void action() => evaluation.AddNewSkillGoal(skill, null, SkillLevel.Advanced, SkillLevel.Average);
+            void action() => evaluation.AddNewSkillGoal(skill, null, targetSkillLevel, currentSkillLevel);
 
             // assert
             Assert.Throws<ArgumentNullException>(action);
@@ -43,9 +47,11 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod());
             var skill = new Skill("C#");
             var skillEvaluator = new Employee().SkillEvaluator;
+            var targetSkillLevel = SkillLevel.Advanced;
+            var currentSkillLevel = SkillLevel.Average;
 
             // act
-            var result = evaluation.AddNewSkillGoal(skill, skillEvaluator, SkillLevel.Advanced, SkillLevel.Average);
+            var result = evaluation.AddNewSkillGoal(skill, skillEvaluator, targetSkillLevel, currentSkillLevel);
 
             // assert
             Assert.Equal(OperationStatusCode.Success, result);
