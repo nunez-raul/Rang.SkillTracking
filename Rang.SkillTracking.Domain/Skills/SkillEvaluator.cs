@@ -67,11 +67,9 @@ namespace Rang.SkillTracking.Domain.Skills
             if (_skillGoals.Where(sg => sg.Id == skillGoal.Id).SingleOrDefault() == null)
                 return OperationStatusCode.MissingSkillGoal;
 
-            skillGoal.InitialSkillLevel.SetSkillLevel(skillLevelAchieved);
             var skillScore = skillGoal.SkillScore;
-            skillScore.Score = score;
-            skillScore.AddNote(note);
-
+            skillScore.SetScore(skillLevelAchieved, score, note);
+            
             return OperationStatusCode.Success;
         }
     }

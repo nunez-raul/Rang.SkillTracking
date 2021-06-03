@@ -12,7 +12,7 @@ namespace Rang.SkillTracking.Domain.Skills
         // fields
 
         // properties
-        public PersonalSkill InitialSkillLevel { get; private set; }
+        public SkillSnapshot InitialSkillLevel { get; private set; }
         public SkillLevel TargetSkillLevel { get; private set; }
         public Evaluation Evaluation { get; private set; }
         public EvaluationPeriod EvaluationPeriod { get; private set; }
@@ -29,11 +29,22 @@ namespace Rang.SkillTracking.Domain.Skills
 
             Evaluation = evaluation ?? throw new ArgumentNullException(nameof(evaluation));
             Evaluatee = Evaluation.Evaluatee;
-            SkillScore = new SkillScore(this);
-            InitialSkillLevel = new PersonalSkill(skill, currentSkillLevel, Evaluatee.Employee.Profile);
             TargetSkillLevel = targetSkillLevel;
             EvaluationPeriod = evaluation.EvaluationPeriod;
             SkillEvaluator = skillEvaluator ?? throw new ArgumentNullException(nameof(skillEvaluator));
+            SkillScore = new SkillScore(this);
+
+            var existingPersonalSkill = Evaluatee.GetPersonalSkillFromProfile(skill);
+            if (existingPersonalSkill  != null)
+            {
+                existingPersonalSkill.SetSkillLevel(currentSkillLevel);
+                InitialSkillLevel = new SkillSnapshot(new TrackingPoint(SkillEvaluator, EvaluationPeriod, EvaluationPeriod.StartDate), existingPersonalSkill);
+            }
+            else
+            {
+                InitialSkillLevel = new SkillSnapshot(new TrackingPoint(SkillEvaluator, EvaluationPeriod, EvaluationPeriod.StartDate), new PersonalSkill(skill, currentSkillLevel, Evaluatee.Employee.Profile));
+            }
+            
         }
 
         // methods

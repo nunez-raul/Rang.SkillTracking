@@ -36,5 +36,12 @@ namespace Rang.SkillTracking.Domain.Skills
             
             return OperationStatusCode.Success;
         }
+
+        public PersonalSkill GetPersonalSkillFromProfile(Skill skill)
+        {
+            return Employee.Profile.Skills
+                .Where(ps => ps.Skill.Name.Equals(skill.Name))
+                .SingleOrDefault();
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
         public void ShouldThrowArgumentNullExceptionWhenAddNewSkillGoalIfSkillIsNull()
         {
             // arrange
-            var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod());
+            var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31)));
             var skillEvaluator = new Employee().SkillEvaluator;
             var targetSkillLevel = SkillLevel.Advanced;
             var currentSkillLevel = SkillLevel.Average;
@@ -28,7 +28,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
         public void ShouldThrowArgumentNullExceptionWhenAddNewSkillGoalIfSkillEvaluatorIsNull()
         {
             // arrange
-            var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod());
+            var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31)));
             var skill = new Skill("C#");
             var targetSkillLevel = SkillLevel.Advanced;
             var currentSkillLevel = SkillLevel.Average;
@@ -44,7 +44,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
         public void ShouldAddNewSkillGoal()
         {
             // arrange
-            var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod());
+            var evaluation = new Evaluation(new Employee().Evaluatee, new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31)));
             var skill = new Skill("C#");
             var skillEvaluator = new Employee().SkillEvaluator;
             var targetSkillLevel = SkillLevel.Advanced;

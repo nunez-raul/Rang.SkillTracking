@@ -26,7 +26,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
         {
             // arrange
             var evaluatee = new Employee().Evaluatee;
-            var evaluationPeriod = new EvaluationPeriod();
+            var evaluationPeriod = new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31));
 
             // act
             var result = evaluatee.AddNewEvaluation(evaluationPeriod);
