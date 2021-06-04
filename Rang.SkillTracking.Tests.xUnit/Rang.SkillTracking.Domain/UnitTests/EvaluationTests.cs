@@ -9,6 +9,48 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
     public class EvaluationTests
     {
         [Fact]
+        public void ShouldThrowArgumentNullExceptionWhenCreatingInstanceIfEvaluateeIsNull()
+        {
+            // arrange
+
+            // act
+            void action() => new Evaluation(null, new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31)));
+
+            // assert
+            Assert.Throws<ArgumentNullException>(action);
+
+        }
+
+        [Fact]
+        public void ShouldThrowArgumentNullExceptionWhenCreatingInstanceIfPeriodIsNull()
+        {
+            // arrange
+
+            // act
+            void action() => new Evaluation(new Employee(101, "John Doe").Evaluatee, null);
+
+            // assert
+            Assert.Throws<ArgumentNullException>(action);
+
+        }
+
+        [Fact]
+        public void ShouldCreateInstance()
+        {
+            // arrange
+            var evaluatee = new Employee(101, "John Doe").Evaluatee;
+            var evaluationPeriod = new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31));
+
+            // act
+            var result = new Evaluation(evaluatee, evaluationPeriod);
+
+            // assert
+            Assert.Equal(evaluatee, result.Evaluatee);
+            Assert.Equal(evaluationPeriod, result.EvaluationPeriod);
+            Assert.NotNull(result.SkillGoals);
+        }
+
+        [Fact]
         public void ShouldThrowArgumentNullExceptionWhenAddNewSkillGoalIfSkillIsNull()
         {
             // arrange
