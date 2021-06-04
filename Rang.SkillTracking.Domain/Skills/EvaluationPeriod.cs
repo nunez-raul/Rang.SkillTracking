@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rang.SkillTracking.Domain.Common;
+using System;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
