@@ -12,7 +12,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
         public void ShouldThrowExceptionWhenAddNewPersonalSkillifSkillIsNull()
         {
             // arrange
-            var personalProfile = new Employee().Profile;
+            var personalProfile = new Employee(101, "John Doe").Profile;
             var currentLevel = SkillLevel.Average;
 
             // act
@@ -26,7 +26,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
         public void ShouldAddNewPersonalSkill()
         {
             // arrange
-            var personalProfile = new Employee().Profile;
+            var personalProfile = new Employee(101, "John Doe").Profile;
             var skill = new Skill("C#");
             var currentLevel = SkillLevel.Average;
 

@@ -13,8 +13,8 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
         public void ShouldThrowArgumentNullExceptionWhenAddNewSkillGoalIfSkillIsNull()
         {
             // arrange
-            var skillEvaluator = new Employee().SkillEvaluator;
-            var evaluatee = new Employee().Evaluatee;
+            var skillEvaluator = new Employee(100, "Jabe Doe").SkillEvaluator;
+            var evaluatee = new Employee(101, "John Doe").Evaluatee;
             var evaluationPeriod = new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31));
             var evaluation = new Evaluation(evaluatee, evaluationPeriod);
             var targetLevel = SkillLevel.Advanced;
@@ -31,9 +31,9 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
         public void ShouldAddNewSkillGoal()
         {
             // arrange
-            var skillEvaluator = new Employee().SkillEvaluator;
+            var skillEvaluator = new Employee(100, "Jane Doe").SkillEvaluator;
             var skill = new Skill("C#");
-            var evaluatee = new Employee().Evaluatee;
+            var evaluatee = new Employee(101, "John Doe").Evaluatee;
             var evaluationPeriod = new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31));
             var evaluation = new Evaluation(evaluatee, evaluationPeriod);
             var targetLevel = SkillLevel.Advanced;
@@ -51,7 +51,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
         public void ShouldThrowArgumentNullExceptionWhenAddNewTrackingPointIfPeriodIsNull()
         {
             // arrange
-            var skillEvaluator = new Employee().SkillEvaluator;
+            var skillEvaluator = new Employee(100, "Jane Doe").SkillEvaluator;
 
             // act
             void action() => skillEvaluator.AddNewTrackingPoint(null, DateTime.Today);
@@ -64,7 +64,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
         public void ShouldAddNewTrackingPoint()
         {
             // arrange
-            var skillEvaluator = new Employee().SkillEvaluator;
+            var skillEvaluator = new Employee(100, "Jane Doe").SkillEvaluator;
             var evaluationPeriod = new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31));
 
             // act
@@ -79,9 +79,9 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
         public void ShouldAddNewSkillSnapshotToTrackingPoint()
         {
             // arrange
-            var skillEvaluator = new Employee().SkillEvaluator;
+            var skillEvaluator = new Employee(100, "Jane Doe").SkillEvaluator;
             var skill = new Skill("C#");
-            var evaluatee = new Employee().Evaluatee;
+            var evaluatee = new Employee(101, "John Doe").Evaluatee;
             skillEvaluator.AddNewTrackingPoint(new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31)), DateTime.Today);
 
             // act
@@ -96,9 +96,9 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
         public void ShouldReturnMissingTrackingPointWhenAddNewSkillSnapshotToNotExistingTrackingPoint()
         {
             // arrange
-            var skillEvaluator = new Employee().SkillEvaluator;
+            var skillEvaluator = new Employee(100, "Jane Doe").SkillEvaluator;
             var skill = new Skill("C#");
-            var evaluatee = new Employee().Evaluatee;
+            var evaluatee = new Employee(101, "John Doe").Evaluatee;
 
             // act
             var result = skillEvaluator.AddNewSkillSnapshotToTrackingPoint(evaluatee, skill, SkillLevel.Noob, DateTime.Today);
@@ -113,7 +113,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
         public void ShouldThrowArgumentNullExceptionWhenSetSkillScoreToSkillGoalIfGoalIsNull()
         {
             // arrange
-            var skillEvaluator = new Employee().SkillEvaluator;
+            var skillEvaluator = new Employee(100, "Jane Doe").SkillEvaluator;
 
             // act
             var skillLevelAchieved = SkillLevel.Advanced;
@@ -127,9 +127,9 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
         public void ShouldReturnMissingGoalWhenSetSkillScoreToSkillGoalIfGoalIsNotFound()
         {
             // arrange
-            var skillEvaluator = new Employee().SkillEvaluator;
+            var skillEvaluator = new Employee(100, "Jane Doe").SkillEvaluator;
             var skill = new Skill("C#");
-            var evaluatee = new Employee().Evaluatee;
+            var evaluatee = new Employee(101, "John Doe").Evaluatee;
             var evaluationPeriod = new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31));
             var evaluation = new Evaluation(evaluatee, evaluationPeriod);
             var targetLevel = SkillLevel.Advanced;
@@ -149,9 +149,9 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
         public void ShouldSetSkillScoreToExistingSkillGoal()
         {
             // arrange
-            var skillEvaluator = new Employee().SkillEvaluator;
+            var skillEvaluator = new Employee(100, "Jane Doe").SkillEvaluator;
             var skill = new Skill("C#");
-            var evaluatee = new Employee().Evaluatee;
+            var evaluatee = new Employee(101, "John Doe").Evaluatee;
             var evaluationPeriod = new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31));
             var evaluation = new Evaluation(evaluatee, evaluationPeriod);
             var targetLevel = SkillLevel.Advanced;

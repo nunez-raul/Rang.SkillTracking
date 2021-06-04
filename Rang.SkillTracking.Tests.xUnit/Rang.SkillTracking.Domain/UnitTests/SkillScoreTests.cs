@@ -14,10 +14,10 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
         {
             // arrange
             var skill = new Skill("C#");
-            var skillEvaluator = new Employee().SkillEvaluator;
+            var skillEvaluator = new Employee(100, "Jane Doe").SkillEvaluator;
             var targetLevel = SkillLevel.Advanced;
             var currentLevel = SkillLevel.Average;
-            var evaluatee = new Employee().Evaluatee;
+            var evaluatee = new Employee(101, "John Doe").Evaluatee;
             var evaluationPeriod = new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31));
             var evaluation = new Evaluation(evaluatee, evaluationPeriod);
             var skillGoal = new SkillGoal(skill, skillEvaluator, targetLevel, currentLevel, evaluation);

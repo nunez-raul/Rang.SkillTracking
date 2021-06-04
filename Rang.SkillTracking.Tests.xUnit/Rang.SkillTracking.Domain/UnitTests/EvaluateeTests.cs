@@ -12,7 +12,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
         public void ShouldThrowArgumentNullExceptionWhenAddNewEvaluationIfEvaluationIsNull()
         {
             // arrange
-            var evaluatee = new Employee().Evaluatee;
+            var evaluatee = new Employee(101, "John Doe").Evaluatee;
 
             // act
             void action() => evaluatee.AddNewEvaluation(null);
@@ -25,7 +25,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
         public void ShouldAddNewEvaluation()
         {
             // arrange
-            var evaluatee = new Employee().Evaluatee;
+            var evaluatee = new Employee(101, "John Doe").Evaluatee;
             var evaluationPeriod = new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31));
 
             // act
