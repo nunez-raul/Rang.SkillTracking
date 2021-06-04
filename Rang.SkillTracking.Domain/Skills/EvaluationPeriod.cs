@@ -21,7 +21,10 @@ namespace Rang.SkillTracking.Domain.Skills
         // constructors
         public EvaluationPeriod(TimeZoneInfo timeZoneInfo, DateTime startDate, DateTime endDate)
         {
-            TimeZoneInfo = timeZoneInfo ?? throw new ArgumentNullException("Can't create a new EvaluationPeriodModel with a null timeZoneInfo.");
+            TimeZoneInfo = timeZoneInfo ?? throw new ArgumentNullException(nameof(timeZoneInfo));
+
+            if (startDate >= endDate)
+                throw new ApplicationException(string.Format("the supplied {0} should be bigger than the supplied {1}",nameof(endDate), nameof(startDate)));
 
             _startDate = startDate;
             _endDate = endDate;
