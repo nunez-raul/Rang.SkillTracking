@@ -9,6 +9,31 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
     public class PersonalProfileTests
     {
         [Fact]
+        public void ShouldThrowArgumentNullExceptionWhenCreatingInstanceIfEmployeeIsNull()
+        {
+            // arrange
+
+            // act
+            void action() => new PersonalProfile(null);
+
+            // assert
+            Assert.Throws<ArgumentNullException>(action);
+        }
+
+        [Fact]
+        public void ShouldCreateInstance()
+        {
+            // arrange
+            var employee = new Employee(101, "John Doe");
+
+            // act
+            var result = new PersonalProfile(employee);
+
+            // assert
+            Assert.Equal(employee, result.Employee);
+        }
+
+        [Fact]
         public void ShouldThrowExceptionWhenAddNewPersonalSkillifSkillIsNull()
         {
             // arrange
