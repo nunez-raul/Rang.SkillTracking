@@ -26,11 +26,18 @@ namespace Rang.SkillTracking.Domain.Skills
         }
 
         // methods
-        public OperationStatusCode AddNewSkillGoal(SkillGoal skillGoal)
+        public OperationStatusCode AddNewSkillGoal(Skill skill, SkillEvaluator skillEvaluator, SkillLevel targetLevel, SkillLevel currentLevel, Evaluation evaluation)
         {
-            if (skillGoal == null)
-                throw new ArgumentNullException(nameof(skillGoal));
+            if (skill == null)
+                throw new ArgumentNullException(nameof(skill));
 
+            if (skillEvaluator == null)
+                throw new ArgumentNullException(nameof(skillEvaluator));
+
+            if (evaluation == null)
+                throw new ArgumentNullException(nameof(evaluation));
+
+            var skillGoal = new SkillGoal(skill, skillEvaluator, targetLevel, currentLevel, evaluation);
             _skillGoals.Add(skillGoal);
 
             return OperationStatusCode.Success;

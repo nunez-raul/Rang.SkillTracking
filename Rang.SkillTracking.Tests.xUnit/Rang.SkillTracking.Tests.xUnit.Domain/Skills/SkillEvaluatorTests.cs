@@ -10,13 +10,18 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
     public class SkillEvaluatorTests
     {
         [Fact]
-        public void ShouldThrowArgumentNullExceptionWhenAddNewSkillGoalIfGoalIsNull()
+        public void ShouldThrowArgumentNullExceptionWhenAddNewSkillGoalIfSkillIsNull()
         {
             // arrange
             var skillEvaluator = new Employee().SkillEvaluator;
+            var evaluatee = new Employee().Evaluatee;
+            var evaluationPeriod = new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31));
+            var evaluation = new Evaluation(evaluatee, evaluationPeriod);
+            var targetLevel = SkillLevel.Advanced;
+            var currentLevel = SkillLevel.Average;
 
             // act
-            void action() => skillEvaluator.AddNewSkillGoal(null);
+            void action() => skillEvaluator.AddNewSkillGoal(null, skillEvaluator, targetLevel, currentLevel, evaluation);
 
             // assert
             Assert.Throws<ArgumentNullException>(action);
@@ -33,10 +38,9 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             var evaluation = new Evaluation(evaluatee, evaluationPeriod);
             var targetLevel = SkillLevel.Advanced;
             var currentLevel = SkillLevel.Average;
-            var skillGoal = new SkillGoal(skill, skillEvaluator, targetLevel, currentLevel, evaluation);
 
             // act
-            var result = skillEvaluator.AddNewSkillGoal(skillGoal);
+            var result = skillEvaluator.AddNewSkillGoal(skill, skillEvaluator, targetLevel, currentLevel, evaluation);
 
             // assert
             Assert.Equal(OperationStatusCode.Success, result);
@@ -152,18 +156,18 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             var evaluation = new Evaluation(evaluatee, evaluationPeriod);
             var targetLevel = SkillLevel.Advanced;
             var currentLevel = SkillLevel.Average;
-            var skillGoal = new SkillGoal(skill, skillEvaluator, targetLevel, currentLevel, evaluation);
-            skillEvaluator.AddNewSkillGoal(skillGoal);
+            skillEvaluator.AddNewSkillGoal(skill, skillEvaluator, targetLevel, currentLevel, evaluation);
 
             // act
+            var skillGoal = skillEvaluator.SkillGoals.First();
             var skillLevelAchieved = SkillLevel.Advanced;
             var result = skillEvaluator.SetSkillScoreToSkillGoal(skillGoal, skillLevelAchieved, 10, "Excelsior!!!");
 
             // assert
             Assert.Equal(OperationStatusCode.Success, result);
-            Assert.Equal(10, skillEvaluator.SkillGoals.First().SkillScore.Score);
-            Assert.Equal(currentLevel, skillEvaluator.SkillGoals.First().InitialSkillLevel.PersonalSkill.SkillLevel);
-            Assert.Equal(skillLevelAchieved, skillEvaluator.SkillGoals.First().SkillScore.AchievedSkillLevel.PersonalSkill.SkillLevel);
+            Assert.Equal(10, skillGoal.SkillScore.Score);
+            Assert.Equal(currentLevel, skillGoal.InitialSkillLevel.PersonalSkill.SkillLevel);
+            Assert.Equal(skillLevelAchieved, skillGoal.SkillScore.AchievedSkillLevel.PersonalSkill.SkillLevel);
         }
     }
 }
