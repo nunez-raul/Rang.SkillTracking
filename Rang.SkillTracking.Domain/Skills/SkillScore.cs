@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class SkillScore
+    public class SkillScore : BaseEntity
     {
         // fields
         protected List<string> _notes;
@@ -17,6 +17,7 @@ namespace Rang.SkillTracking.Domain.Skills
 
         // constructors
         public SkillScore(SkillGoal skillGoal)
+            :base()
         {
             SkillGoal = skillGoal ?? throw new ArgumentNullException(nameof(skillGoal));
             AchievedSkillLevel = null;

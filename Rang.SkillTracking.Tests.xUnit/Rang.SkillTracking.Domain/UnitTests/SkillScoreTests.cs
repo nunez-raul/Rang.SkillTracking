@@ -5,12 +5,12 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.Skills
+namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
 {
     public class SkillScoreTests
     {
         [Fact]
-        public void ShouldSetScore() 
+        public void ShouldSetScore()
         {
             // arrange
             var skill = new Skill("C#");

@@ -2,7 +2,7 @@
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class EvaluationPeriod
+    public class EvaluationPeriod : BaseEntity
     {
         // fields
         private readonly DateTime _startDate;

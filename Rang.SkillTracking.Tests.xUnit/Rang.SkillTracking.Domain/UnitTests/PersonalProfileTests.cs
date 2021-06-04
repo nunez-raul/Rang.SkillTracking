@@ -4,7 +4,7 @@ using Rang.SkillTracking.Domain.Skills;
 using System;
 using Xunit;
 
-namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.Employees
+namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
 {
     public class PersonalProfileTests
     {
@@ -34,7 +34,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.E
             var result = personalProfile.AddNewPersonalSkill(skill, currentLevel);
 
             // assert
-            Assert.Equal(OperationStatusCode.Success, result);
+            Assert.Equal(OperationStatusCode.Success, result.OperationStatusCode);
             Assert.Single(personalProfile.Skills);
         }
     }

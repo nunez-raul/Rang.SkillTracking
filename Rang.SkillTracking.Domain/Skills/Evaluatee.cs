@@ -3,12 +3,10 @@ using Rang.SkillTracking.Domain.Employees;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class Evaluatee
+    public class Evaluatee : BaseEntity
     {
         // fields
         protected List<Evaluation> _evaluations;
@@ -19,6 +17,7 @@ namespace Rang.SkillTracking.Domain.Skills
 
         // constructors
         public Evaluatee(Employee employee, Evaluation[] evaluations = null)
+            :base()
         {
             Employee = employee ?? throw new ArgumentNullException(nameof(employee));
             _evaluations = evaluations == null
@@ -27,20 +26,21 @@ namespace Rang.SkillTracking.Domain.Skills
         }
 
         // methods
-        public OperationStatusCode AddNewEvaluation(EvaluationPeriod evaluationPeriod)
+        public EntityOperationResult<Evaluation> AddNewEvaluation(EvaluationPeriod evaluationPeriod)
         {
             if (evaluationPeriod == null)
                 throw new ArgumentNullException(nameof(evaluationPeriod));
 
-            _evaluations.Add(new Evaluation(this, evaluationPeriod));
+            var evaluation = new Evaluation(this, evaluationPeriod);
+            _evaluations.Add(evaluation);
             
-            return OperationStatusCode.Success;
+            return new EntityOperationResult<Evaluation>(OperationStatusCode.Success, evaluation);
         }
 
         public PersonalSkill GetPersonalSkillFromProfile(Skill skill)
         {
             return Employee.Profile.Skills
-                .Where(ps => ps.Skill.Name.Equals(skill.Name))
+                .Where(ps => ps.Skill.Id.Equals(skill.Id))
                 .SingleOrDefault();
         }
     }

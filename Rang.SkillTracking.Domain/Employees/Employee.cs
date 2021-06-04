@@ -1,13 +1,8 @@
 ﻿using Rang.SkillTracking.Domain.Skills;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rang.SkillTracking.Domain.Employees
 {
-    public class Employee
+    public class Employee : BaseEntity
     {
         // fields
 
@@ -18,6 +13,7 @@ namespace Rang.SkillTracking.Domain.Employees
 
         // constructors
         public Employee()
+            :base()
         {
             Profile = new PersonalProfile(this);
             Evaluatee = new Evaluatee(this);

@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Rang.SkillTracking.Domain\Rang.SkillTracking.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Rang.SkillTracking.Domain\IntegrationTests\" />
+  </ItemGroup>
+
 </Project>

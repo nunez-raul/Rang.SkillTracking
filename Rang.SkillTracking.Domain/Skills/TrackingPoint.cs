@@ -1,13 +1,10 @@
 ﻿using Rang.SkillTracking.Domain.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class TrackingPoint
+    public class TrackingPoint : BaseEntity
     {
         // fields
         private readonly DateTime _date;
@@ -21,6 +18,7 @@ namespace Rang.SkillTracking.Domain.Skills
 
         // constructors
         public TrackingPoint(SkillEvaluator owner, EvaluationPeriod evaluationPeriod, DateTime date)
+            :base()
         {
             _skillSnapshots = new List<SkillSnapshot>();
 
@@ -30,12 +28,12 @@ namespace Rang.SkillTracking.Domain.Skills
         }
 
         // methods
-        public OperationStatusCode AddNewSkillSnapshot(PersonalSkill personalSkill)
+        public EntityOperationResult<SkillSnapshot> AddNewSkillSnapshot(PersonalSkill personalSkill)
         {
             var skillSnapshot = new SkillSnapshot(this, personalSkill);
             _skillSnapshots.Add(skillSnapshot);
 
-            return OperationStatusCode.Success;
+            return new EntityOperationResult<SkillSnapshot>(OperationStatusCode.Success, skillSnapshot);
         }
     }
 }

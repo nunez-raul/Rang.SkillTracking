@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class SkillEvaluator
+    public class SkillEvaluator : BaseEntity
     {
         // fields
         protected List<SkillGoal> _skillGoals;
@@ -19,6 +19,7 @@ namespace Rang.SkillTracking.Domain.Skills
 
         // constructors
         public SkillEvaluator(Employee employee)
+            :base()
         {
             Employee = employee ?? throw new ArgumentNullException(nameof(employee));
             _skillGoals = new List<SkillGoal>();
@@ -26,7 +27,7 @@ namespace Rang.SkillTracking.Domain.Skills
         }
 
         // methods
-        public OperationStatusCode AddNewSkillGoal(Skill skill, SkillEvaluator skillEvaluator, SkillLevel targetLevel, SkillLevel currentLevel, Evaluation evaluation)
+        public EntityOperationResult<SkillGoal> AddNewSkillGoal(Skill skill, SkillEvaluator skillEvaluator, SkillLevel targetLevel, SkillLevel currentLevel, Evaluation evaluation)
         {
             if (skill == null)
                 throw new ArgumentNullException(nameof(skill));
@@ -40,44 +41,44 @@ namespace Rang.SkillTracking.Domain.Skills
             var skillGoal = new SkillGoal(skill, skillEvaluator, targetLevel, currentLevel, evaluation);
             _skillGoals.Add(skillGoal);
 
-            return OperationStatusCode.Success;
+            return new EntityOperationResult<SkillGoal>(OperationStatusCode.Success, skillGoal);
         }
 
-        public OperationStatusCode AddNewTrackingPoint(EvaluationPeriod evaluationPeriod, DateTime date)
+        public EntityOperationResult<TrackingPoint> AddNewTrackingPoint(EvaluationPeriod evaluationPeriod, DateTime date)
         {
-            _trackingPoints.Add(
-                new TrackingPoint(this, evaluationPeriod ,  date));
+            var trackingPoint = new TrackingPoint(this, evaluationPeriod, date);
+            _trackingPoints.Add(trackingPoint);
 
-            return OperationStatusCode.Success;
+            return new EntityOperationResult<TrackingPoint>(OperationStatusCode.Success, trackingPoint);
         }
 
-        public OperationStatusCode AddNewSkillSnapshotToTrackingPoint(Evaluatee evaluatee, Skill skill, SkillLevel currentSkillLevel, DateTime date)
+        public EntityOperationResult<SkillSnapshot> AddNewSkillSnapshotToTrackingPoint(Evaluatee evaluatee, Skill skill, SkillLevel currentSkillLevel, DateTime date)
         {
             var trackingPoint =  _trackingPoints
                 .Where(Tp => Tp.Date.Date.Equals(date.Date))
                 .SingleOrDefault();
 
             if (trackingPoint == null)
-                return OperationStatusCode.MissingTrackingPoint;
+                return new EntityOperationResult<SkillSnapshot>(OperationStatusCode.MissingTrackingPoint);
 
-            trackingPoint.AddNewSkillSnapshot(
+            var result = trackingPoint.AddNewSkillSnapshot(
                 new PersonalSkill(skill, currentSkillLevel, evaluatee.Employee.Profile));
 
-            return OperationStatusCode.Success;
+            return new EntityOperationResult<SkillSnapshot>(OperationStatusCode.Success, result.EntityCollection.First());
         }
 
-        public OperationStatusCode SetSkillScoreToSkillGoal(SkillGoal skillGoal, SkillLevel skillLevelAchieved, int score, string note)
+        public EntityOperationResult<SkillScore> SetSkillScoreToSkillGoal(SkillGoal skillGoal, SkillLevel skillLevelAchieved, int score, string note)
         {
             if (skillGoal == null)
                 throw new ArgumentNullException(nameof(skillGoal));
 
             if (_skillGoals.Where(sg => sg.Id == skillGoal.Id).SingleOrDefault() == null)
-                return OperationStatusCode.MissingSkillGoal;
+                return new EntityOperationResult<SkillScore>(OperationStatusCode.MissingSkillGoal);
 
             var skillScore = skillGoal.SkillScore;
             skillScore.SetScore(skillLevelAchieved, score, note);
             
-            return OperationStatusCode.Success;
+            return new EntityOperationResult<SkillScore>(OperationStatusCode.Success, skillScore);
         }
     }
 }

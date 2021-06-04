@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.Skills
+namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
 {
     public class SkillEvaluatorTests
     {
@@ -43,7 +43,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             var result = skillEvaluator.AddNewSkillGoal(skill, skillEvaluator, targetLevel, currentLevel, evaluation);
 
             // assert
-            Assert.Equal(OperationStatusCode.Success, result);
+            Assert.Equal(OperationStatusCode.Success, result.OperationStatusCode);
             Assert.Single(skillEvaluator.SkillGoals);
         }
 
@@ -71,7 +71,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             var result = skillEvaluator.AddNewTrackingPoint(evaluationPeriod, DateTime.Today);
 
             // assert
-            Assert.Equal(OperationStatusCode.Success, result);
+            Assert.Equal(OperationStatusCode.Success, result.OperationStatusCode);
             Assert.Single(skillEvaluator.TrackingPoints);
         }
 
@@ -88,7 +88,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             var result = skillEvaluator.AddNewSkillSnapshotToTrackingPoint(evaluatee, skill, SkillLevel.Noob, DateTime.Today);
 
             // assert
-            Assert.Equal(OperationStatusCode.Success, result);
+            Assert.Equal(OperationStatusCode.Success, result.OperationStatusCode);
             Assert.Single(skillEvaluator.TrackingPoints.First().SkillSnapshots);
         }
 
@@ -104,7 +104,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             var result = skillEvaluator.AddNewSkillSnapshotToTrackingPoint(evaluatee, skill, SkillLevel.Noob, DateTime.Today);
 
             // assert
-            Assert.Equal(OperationStatusCode.MissingTrackingPoint, result);
+            Assert.Equal(OperationStatusCode.MissingTrackingPoint, result.OperationStatusCode);
             Assert.Empty(skillEvaluator.TrackingPoints);
         }
 
@@ -141,7 +141,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             var result = skillEvaluator.SetSkillScoreToSkillGoal(skillGoal, skillLevelAchieved, 10, "Excelsior!!!");
 
             // assert
-            Assert.Equal(OperationStatusCode.MissingSkillGoal, result);
+            Assert.Equal(OperationStatusCode.MissingSkillGoal, result.OperationStatusCode);
             Assert.Empty(skillEvaluator.SkillGoals);
         }
 
@@ -164,7 +164,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             var result = skillEvaluator.SetSkillScoreToSkillGoal(skillGoal, skillLevelAchieved, 10, "Excelsior!!!");
 
             // assert
-            Assert.Equal(OperationStatusCode.Success, result);
+            Assert.Equal(OperationStatusCode.Success, result.OperationStatusCode);
             Assert.Equal(10, skillGoal.SkillScore.Score);
             Assert.Equal(currentLevel, skillGoal.InitialSkillLevel.PersonalSkill.SkillLevel);
             Assert.Equal(skillLevelAchieved, skillGoal.SkillScore.AchievedSkillLevel.PersonalSkill.SkillLevel);

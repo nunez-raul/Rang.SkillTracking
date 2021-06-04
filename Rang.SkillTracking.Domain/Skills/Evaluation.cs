@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class Evaluation
+    public class Evaluation : BaseEntity
     {
         // fields
         protected List<SkillGoal> _skillGoals;
@@ -16,6 +16,7 @@ namespace Rang.SkillTracking.Domain.Skills
 
         // constructors
         public Evaluation(Evaluatee evaluatee, EvaluationPeriod evaluationPeriod)
+            :base()
         {
             Evaluatee = evaluatee ?? throw new ArgumentNullException(nameof(evaluatee));
             EvaluationPeriod = evaluationPeriod ?? throw new ArgumentNullException(nameof(evaluationPeriod));
@@ -23,12 +24,12 @@ namespace Rang.SkillTracking.Domain.Skills
         }
 
         // methods
-        public OperationStatusCode AddNewSkillGoal(Skill skill, SkillEvaluator skillEvaluator, SkillLevel targetSkillLevel, SkillLevel currentSkillLevel)
+        public EntityOperationResult<SkillGoal> AddNewSkillGoal(Skill skill, SkillEvaluator skillEvaluator, SkillLevel targetSkillLevel, SkillLevel currentSkillLevel)
         {
             var newSkillGoal = new SkillGoal(skill, skillEvaluator, targetSkillLevel, currentSkillLevel, this);
             _skillGoals.Add(newSkillGoal);
 
-            return OperationStatusCode.Success;
+            return new EntityOperationResult<SkillGoal>(OperationStatusCode.Success, newSkillGoal);
         }
     }
 }

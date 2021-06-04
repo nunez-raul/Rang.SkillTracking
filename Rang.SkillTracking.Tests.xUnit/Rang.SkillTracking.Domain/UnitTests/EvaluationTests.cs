@@ -4,7 +4,7 @@ using Rang.SkillTracking.Domain.Skills;
 using System;
 using Xunit;
 
-namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.Skills
+namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
 {
     public class EvaluationTests
     {
@@ -54,7 +54,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             var result = evaluation.AddNewSkillGoal(skill, skillEvaluator, targetSkillLevel, currentSkillLevel);
 
             // assert
-            Assert.Equal(OperationStatusCode.Success, result);
+            Assert.Equal(OperationStatusCode.Success, result.OperationStatusCode);
             Assert.Single(evaluation.SkillGoals);
         }
     }

@@ -4,7 +4,7 @@ using Rang.SkillTracking.Domain.Skills;
 using System;
 using Xunit;
 
-namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.Skills
+namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
 {
     public class EvaluateeTests
     {
@@ -32,7 +32,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Tests.xUnit.Domain.S
             var result = evaluatee.AddNewEvaluation(evaluationPeriod);
 
             // assert
-            Assert.Equal(OperationStatusCode.Success, result);
+            Assert.Equal(OperationStatusCode.Success, result.OperationStatusCode);
             Assert.Single(evaluatee.Evaluations);
         }
     }

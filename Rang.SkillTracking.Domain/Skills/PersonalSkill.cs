@@ -4,7 +4,7 @@ using System;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class PersonalSkill
+    public class PersonalSkill : BaseEntity
     {
         // fields
 
@@ -15,6 +15,7 @@ namespace Rang.SkillTracking.Domain.Skills
 
         // constructors
         public PersonalSkill(Skill skill, SkillLevel currentSkillLevel, PersonalProfile profile)
+            :base()
         {
             Skill = skill ?? throw new ArgumentNullException(nameof(skill));
             SkillLevel = currentSkillLevel;
@@ -23,11 +24,11 @@ namespace Rang.SkillTracking.Domain.Skills
         }
 
         // methods
-        public OperationStatusCode SetSkillLevel(SkillLevel skillLevel)
+        public EntityOperationResult<PersonalSkill> SetSkillLevel(SkillLevel skillLevel)
         {
             SkillLevel = skillLevel;
 
-            return OperationStatusCode.Success;
+            return new EntityOperationResult<PersonalSkill>(OperationStatusCode.Success, this);
         }
     }
 }

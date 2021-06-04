@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class SkillSnapshot
+    public class SkillSnapshot : BaseEntity
     {
         // fields
 
@@ -17,6 +17,7 @@ namespace Rang.SkillTracking.Domain.Skills
 
         // constructors
         public SkillSnapshot(TrackingPoint trackingPoint, PersonalSkill personalSkill)
+            :base()
         {
             TrackingPoint = trackingPoint ?? throw new ArgumentNullException(nameof(trackingPoint));
             PersonalSkill = personalSkill ?? throw new ArgumentNullException(nameof(personalSkill));

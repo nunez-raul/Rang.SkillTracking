@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class Skill
+    public class Skill : BaseEntity
     {
         // fields
         
@@ -15,6 +11,7 @@ namespace Rang.SkillTracking.Domain.Skills
 
         // constructors
         public Skill(string name)
+            :base()
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
