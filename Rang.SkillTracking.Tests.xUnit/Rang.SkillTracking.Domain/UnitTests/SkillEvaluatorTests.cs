@@ -10,6 +10,31 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
     public class SkillEvaluatorTests
     {
         [Fact]
+        public void ShouldThrowArgumentNullExceptionWhenCreatingInstanceIfEmployeeIsNull()
+        {
+            // arrange
+
+            // act
+            void action() => new SkillEvaluator(null);
+
+            // assert
+            Assert.Throws<ArgumentNullException>(action);
+        }
+
+        [Fact]
+        public void ShouldCreateInstance()
+        {
+            // arrange
+            var employee = new Employee(101, "John Doe");
+
+            // act
+            var result = new SkillEvaluator(employee);
+
+            // assert
+            Assert.Equal(employee, result.Employee);
+        }
+
+        [Fact]
         public void ShouldThrowArgumentNullExceptionWhenAddNewSkillGoalIfSkillIsNull()
         {
             // arrange
