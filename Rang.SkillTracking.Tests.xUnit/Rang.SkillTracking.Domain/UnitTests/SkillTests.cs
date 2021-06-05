@@ -30,6 +30,7 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
 
             // assert
             Assert.Equal("C#", result.Name);
+            Assert.NotNull(result.Tags);
         }
 
         [Fact]

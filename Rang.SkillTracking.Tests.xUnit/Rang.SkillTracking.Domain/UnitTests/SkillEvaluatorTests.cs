@@ -32,6 +32,8 @@ namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
 
             // assert
             Assert.Equal(employee, result.Employee);
+            Assert.NotNull(result.SkillGoals);
+            Assert.NotNull(result.TrackingPoints);
         }
 
         [Fact]
