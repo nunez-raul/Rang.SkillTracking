@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Rang.SkillTracking.Domain\IntegrationTests\" />
+    <Folder Include="IntegrationTests\" />
   </ItemGroup>
 
 </Project>

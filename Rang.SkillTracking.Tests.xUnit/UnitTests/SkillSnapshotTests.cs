@@ -4,7 +4,7 @@ using Rang.SkillTracking.Domain.Skills;
 using System;
 using Xunit;
 
-namespace Rang.SkillTracking.Tests.xUnit.Rang.SkillTracking.Domain.UnitTests
+namespace Rang.SkillTracking.Tests.xUnit.UnitTests
 {
     public class SkillSnapshotTests
     {
