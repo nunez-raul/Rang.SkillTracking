@@ -20,7 +20,7 @@ namespace Rang.SkillTracking.Domain.Common
         protected BaseEntity(Tmodel model)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
-            if (model.Id == Guid.Empty) { _model.Id = Guid.NewGuid(); }
+            
             ModelValidationErrors = new Dictionary<ModelValidationStatusCode, List<string>>();
             InitializeMe();
         }

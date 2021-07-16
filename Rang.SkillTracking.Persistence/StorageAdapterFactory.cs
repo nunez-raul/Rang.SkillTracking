@@ -20,6 +20,7 @@ namespace Rang.SkillTracking.Persistence
             await InitializeDbContextAsync(skillTrackingDbContext, storageAdapterInitializer);
             return new StorageAdapter(skillTrackingDbContext);
         }
+
         private static async Task InitializeDbContextAsync(SkillTrackingDbContext skillTrackingDbContext, StorageAdapterInitializer storageInitializer)
         {
             if(storageInitializer.Employees != null)
