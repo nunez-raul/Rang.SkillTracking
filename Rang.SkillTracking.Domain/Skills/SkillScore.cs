@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class SkillScore : BaseEntity
+    public class SkillScore : BaseEntity<SkillScoreModel>
     {
         // fields
         protected List<string> _notes;
@@ -12,16 +12,20 @@ namespace Rang.SkillTracking.Domain.Skills
         // properties
         public SkillGoal SkillGoal { get; private set; }
         public SkillSnapshot AchievedSkillLevel { get; private set; }
-        public int Score { get; private set; }
+        public int Score { get => _model.Score; private set => _model.Score = value; }
         public IEnumerable<string> Notes { get => _notes; }
 
         // constructors
         public SkillScore(SkillGoal skillGoal)
-            :base()
+            :base(new SkillScoreModel())
         {
             SkillGoal = skillGoal ?? throw new ArgumentNullException(nameof(skillGoal));
             AchievedSkillLevel = null;
             _notes = new List<string>();
+
+            _model.SkillGoalModel = skillGoal.GetModel();
+            _model.AchievedSkillLevelModel = null;
+            //_model.Notes = new List<string>();
         }
 
         // methods
@@ -37,6 +41,21 @@ namespace Rang.SkillTracking.Domain.Skills
             {
                 _notes.Add(note);
             }
+        }
+
+        public override SkillScoreModel GetModel()
+        {
+            return _model;
+        }
+
+        protected override void InitializeMe()
+        {
+
+        }
+
+        protected override bool ValidateMe()
+        {
+            return true;
         }
     }
 }

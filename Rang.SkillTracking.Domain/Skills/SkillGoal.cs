@@ -3,7 +3,7 @@ using System;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class SkillGoal: BaseEntity
+    public class SkillGoal: BaseEntity<SkillGoalModel>
     {
         // fields
 
@@ -18,7 +18,7 @@ namespace Rang.SkillTracking.Domain.Skills
 
         // constructors
         public SkillGoal(Skill skill, SkillEvaluator skillEvaluator, SkillLevel targetSkillLevel, SkillLevel currentSkillLevel, Evaluation evaluation)
-            :base()
+            :base(new SkillGoalModel())
         {
             if(skill == null)
                 throw new ArgumentNullException(nameof(skill));
@@ -40,9 +40,30 @@ namespace Rang.SkillTracking.Domain.Skills
             {
                 InitialSkillLevel = new SkillSnapshot(new TrackingPoint(SkillEvaluator, EvaluationPeriod, EvaluationPeriod.StartDate), new PersonalSkill(skill, currentSkillLevel, Evaluatee.Employee.Profile));
             }
-            
+
+            _model.EvaluationModel = evaluation.GetModel();
+            _model.EvaluateeModel = Evaluation.Evaluatee.GetModel();
+            _model.TargetSkillLevel = targetSkillLevel;
+            _model.EvaluationPeriodModel = evaluation.EvaluationPeriod.GetModel();
+            _model.SkillEvaluatorModel = skillEvaluator.GetModel();
+            _model.SkillScoreModel = SkillScore.GetModel();
+            _model.InitialSkillLevelModel = InitialSkillLevel.GetModel();
         }
 
         // methods
+        public override SkillGoalModel GetModel()
+        {
+            return _model;
+        }
+
+        protected override void InitializeMe()
+        {
+
+        }
+
+        protected override bool ValidateMe()
+        {
+            return true;
+        }
     }
 }

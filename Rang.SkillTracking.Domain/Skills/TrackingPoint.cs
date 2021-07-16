@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class TrackingPoint : BaseEntity
+    public class TrackingPoint : BaseEntity<TrackingPointModel>
     {
         // fields
         private readonly DateTime _date;
@@ -34,6 +34,21 @@ namespace Rang.SkillTracking.Domain.Skills
             _skillSnapshots.Add(skillSnapshot);
 
             return new EntityOperationResult<SkillSnapshot>(OperationStatusCode.Success, skillSnapshot);
+        }
+
+        public override TrackingPointModel GetModel()
+        {
+            return _model;
+        }
+
+        protected override void InitializeMe()
+        {
+
+        }
+
+        protected override bool ValidateMe()
+        {
+            return true;
         }
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Rang.SkillTracking.Domain.Common
+﻿namespace Rang.SkillTracking.Domain.Common
 {
     public enum OperationStatusCode
     {
@@ -22,5 +16,13 @@ namespace Rang.SkillTracking.Domain.Common
         Advanced,
         Expert,
         Guru
+    }
+
+    public enum ModelValidationStatusCode
+    {
+        RequiredInformationMissing,
+        CapacityExceeded,
+        InvalidDataSupplied,
+        InternalMemberFailedValidation
     }
 }

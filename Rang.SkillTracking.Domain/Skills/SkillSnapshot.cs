@@ -3,7 +3,7 @@ using System;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class SkillSnapshot : BaseEntity
+    public class SkillSnapshot : BaseEntity<SkillSnapshotModel>
     {
         // fields
 
@@ -22,6 +22,19 @@ namespace Rang.SkillTracking.Domain.Skills
         }
 
         // methods
+        public override SkillSnapshotModel GetModel()
+        {
+            return _model;
+        }
 
+        protected override void InitializeMe()
+        {
+
+        }
+
+        protected override bool ValidateMe()
+        {
+            return true;
+        }
     }
 }

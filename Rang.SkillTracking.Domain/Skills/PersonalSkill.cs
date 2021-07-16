@@ -4,7 +4,7 @@ using System;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class PersonalSkill : BaseEntity
+    public class PersonalSkill : BaseEntity<PersonalSkillModel>
     {
         // fields
 
@@ -15,12 +15,16 @@ namespace Rang.SkillTracking.Domain.Skills
 
         // constructors
         public PersonalSkill(Skill skill, SkillLevel currentSkillLevel, PersonalProfile profile)
-            :base()
+            :base(new PersonalSkillModel())
         {
             Skill = skill ?? throw new ArgumentNullException(nameof(skill));
             SkillLevel = currentSkillLevel;
 
             Profile = profile ?? throw new ArgumentNullException(nameof(profile));
+
+            _model.SkillModel = skill.GetModel();
+            _model.SkillLevel = currentSkillLevel;
+            _model.ProfileModel = profile.GetModel();
         }
 
         // methods
@@ -29,6 +33,21 @@ namespace Rang.SkillTracking.Domain.Skills
             SkillLevel = skillLevel;
 
             return new EntityOperationResult<PersonalSkill>(OperationStatusCode.Success, this);
+        }
+
+        public override PersonalSkillModel GetModel()
+        {
+            return _model;
+        }
+
+        protected override void InitializeMe()
+        {
+
+        }
+
+        protected override bool ValidateMe()
+        {
+            return true;
         }
     }
 }

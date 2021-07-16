@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Rang.SkillTracking.Domain.Employees
 {
-    public class PersonalProfile : BaseEntity
+    public class PersonalProfile : BaseEntity<PersonalProfileModel>
     {
         // fields
         private readonly IList<PersonalSkill> _skills;
@@ -16,10 +16,13 @@ namespace Rang.SkillTracking.Domain.Employees
 
         // constructors
         public PersonalProfile(Employee employee)
-            :base()
+            : base(new PersonalProfileModel())
         {
             Employee = employee ?? throw new ArgumentNullException(nameof(employee));
             _skills = new List<PersonalSkill>();
+
+            _model.EmployeeModel = employee.GetModel();
+            _model.SkillModels = new List<PersonalSkillModel>();
         }
 
         // methods
@@ -29,6 +32,21 @@ namespace Rang.SkillTracking.Domain.Employees
             _skills.Add(personalSkill);
 
             return new EntityOperationResult<PersonalSkill>(OperationStatusCode.Success, personalSkill);
+        }
+
+        public override PersonalProfileModel GetModel()
+        {
+            return _model;
+        }
+
+        protected override void InitializeMe()
+        {
+
+        }
+
+        protected override bool ValidateMe()
+        {
+            return true;
         }
     }
 }

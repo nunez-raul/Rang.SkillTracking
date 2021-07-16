@@ -12,9 +12,10 @@ namespace Rang.SkillTracking.Tests.xUnit.UnitTests
         public void ShouldThrowArgumentNullExceptionWhenCreatingInstanceIfEmployeeIsNull()
         {
             // arrange
+            Employee employee = null;
 
             // act
-            void action() => new Evaluatee(null);
+            void action() => new Evaluatee(employee);
 
             // assert
             Assert.Throws<ArgumentNullException>(action);

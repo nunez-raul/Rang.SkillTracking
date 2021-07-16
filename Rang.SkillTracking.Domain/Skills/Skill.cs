@@ -4,23 +4,22 @@ using System.Collections.Generic;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class Skill : BaseEntity
+    public class Skill : BaseEntity<SkillModel>
     {
         // fields
         private IList<Tag> _tags;
 
         // properties
-        public string Name { get; private set; }
+        public string Name { get => _model.Name; private set => _model.Name = value; }
         public IEnumerable<Tag> Tags { get => _tags; }
 
         // constructors
         public Skill(string name)
-            :base()
+            :base(new SkillModel { Name = name })
         {
             if(string.IsNullOrWhiteSpace(name))
                 throw new ArgumentNullException(nameof(name));
 
-            Name = name;
             _tags = new List<Tag>();
         }
 
@@ -35,6 +34,21 @@ namespace Rang.SkillTracking.Domain.Skills
         public void AddTag(Tag tag)
         {
             _tags.Add(tag);
+        }
+
+        public override SkillModel GetModel()
+        {
+            return _model;
+        }
+
+        protected override void InitializeMe()
+        {
+
+        }
+
+        protected override bool ValidateMe()
+        {
+            return true;
         }
     }
 }

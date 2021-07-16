@@ -11,9 +11,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{6C721A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{A1A1820A-5524-4003-A846-4639A95346AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rang.SkillTracking.Domain", "Rang.SkillTracking.Domain\Rang.SkillTracking.Domain.csproj", "{80D88121-7F19-4565-8440-DBCCC6D4D8DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rang.SkillTracking.Domain", "Rang.SkillTracking.Domain\Rang.SkillTracking.Domain.csproj", "{80D88121-7F19-4565-8440-DBCCC6D4D8DA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{2AAC6E0E-58CA-402B-8841-111A60E121FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{1AFBBA55-BA8F-4DEE-81C6-D508BF5D1644}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rang.SkillTracking.Application", "Rang.SkillTracking.Application\Rang.SkillTracking.Application.csproj", "{63EB3F12-0460-4161-AA5D-6A6646F82C52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rang.SkillTracking.Persistence", "Rang.SkillTracking.Persistence\Rang.SkillTracking.Persistence.csproj", "{6CE51109-EA26-4E01-BA44-E7A04C04F14D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +35,14 @@ Global
 		{80D88121-7F19-4565-8440-DBCCC6D4D8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80D88121-7F19-4565-8440-DBCCC6D4D8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80D88121-7F19-4565-8440-DBCCC6D4D8DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63EB3F12-0460-4161-AA5D-6A6646F82C52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63EB3F12-0460-4161-AA5D-6A6646F82C52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63EB3F12-0460-4161-AA5D-6A6646F82C52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63EB3F12-0460-4161-AA5D-6A6646F82C52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CE51109-EA26-4E01-BA44-E7A04C04F14D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CE51109-EA26-4E01-BA44-E7A04C04F14D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CE51109-EA26-4E01-BA44-E7A04C04F14D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CE51109-EA26-4E01-BA44-E7A04C04F14D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +51,9 @@ Global
 		{7E92E001-9F39-450F-9223-BADF5CCD17AB} = {B75D40CC-6D80-42CD-9866-83A2F3F055FF}
 		{80D88121-7F19-4565-8440-DBCCC6D4D8DA} = {2AAC6E0E-58CA-402B-8841-111A60E121FF}
 		{2AAC6E0E-58CA-402B-8841-111A60E121FF} = {6C721AEE-821D-4F22-AD59-058A69D17B63}
+		{1AFBBA55-BA8F-4DEE-81C6-D508BF5D1644} = {6C721AEE-821D-4F22-AD59-058A69D17B63}
+		{63EB3F12-0460-4161-AA5D-6A6646F82C52} = {2AAC6E0E-58CA-402B-8841-111A60E121FF}
+		{6CE51109-EA26-4E01-BA44-E7A04C04F14D} = {1AFBBA55-BA8F-4DEE-81C6-D508BF5D1644}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C012863-52F2-47A7-AAF1-B01EDCBE4E1D}

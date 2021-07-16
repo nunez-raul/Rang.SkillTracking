@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Rang.SkillTracking.Domain.Skills
 {
-    public class SkillEvaluator : BaseEntity
+    public class SkillEvaluator : BaseEntity<SkillEvaluatorModel>
     {
         // fields
         protected List<SkillGoal> _skillGoals;
@@ -19,11 +19,15 @@ namespace Rang.SkillTracking.Domain.Skills
 
         // constructors
         public SkillEvaluator(Employee employee)
-            :base()
+            :base(new SkillEvaluatorModel())
         {
             Employee = employee ?? throw new ArgumentNullException(nameof(employee));
             _skillGoals = new List<SkillGoal>();
             _trackingPoints = new List<TrackingPoint>();
+
+            _model.EmployeeModel = employee.GetModel();
+            _model.SkillGoalModels = new List<SkillGoalModel>();
+            _model.TrackingPointModels = new List<TrackingPointModel>();
         }
 
         // methods
@@ -72,13 +76,28 @@ namespace Rang.SkillTracking.Domain.Skills
             if (skillGoal == null)
                 throw new ArgumentNullException(nameof(skillGoal));
 
-            if (_skillGoals.Where(sg => sg.Id == skillGoal.Id).SingleOrDefault() == null)
+            if (_skillGoals.Where(sg => sg.GetModel().Id == skillGoal.GetModel().Id).SingleOrDefault() == null)
                 return new EntityOperationResult<SkillScore>(OperationStatusCode.MissingSkillGoal);
 
             var skillScore = skillGoal.SkillScore;
             skillScore.SetScore(skillLevelAchieved, score, note);
             
             return new EntityOperationResult<SkillScore>(OperationStatusCode.Success, skillScore);
+        }
+
+        public override SkillEvaluatorModel GetModel()
+        {
+            return _model;
+        }
+
+        protected override void InitializeMe()
+        {
+
+        }
+
+        protected override bool ValidateMe()
+        {
+            return true;
         }
     }
 }
