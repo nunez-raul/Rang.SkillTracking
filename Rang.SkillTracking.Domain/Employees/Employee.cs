@@ -34,7 +34,7 @@ namespace Rang.SkillTracking.Domain.Employees
             :base(employeeModel)
         {
 
-
+            
             Profile = new PersonalProfile(this);
             Evaluatee = new Evaluatee(this);
             SkillEvaluator = new SkillEvaluator(this);
