@@ -46,7 +46,7 @@ namespace Rang.SkillTracking.Persistence
             if (evaluationPeriodInUtcDataModel == null)
                 return null;
 
-            return new EvaluationPeriod(new EvaluationPeriodModel() , targetTimeZoneInfo);
+            return new EvaluationPeriod(evaluationPeriodInUtcDataModel, targetTimeZoneInfo);
         }
 
         public async Task<Evaluatee>  SaveEvaluateeAsync(Evaluatee evaluatee)

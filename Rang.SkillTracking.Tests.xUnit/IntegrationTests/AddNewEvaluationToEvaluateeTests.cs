@@ -6,6 +6,7 @@ using Rang.SkillTracking.Domain.Skills;
 using Rang.SkillTracking.Persistence;
 using Rang.SkillTracking.Tests.xUnit.TestDoubles;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -86,8 +87,8 @@ namespace Rang.SkillTracking.Tests.xUnit.IntegrationTests
                 Employees = new Employee[] { new Employee(101, "John Doe") },
                 EvaluationPeriods = new EvaluationPeriod[] { new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31)) }
             };
-
             IStorageAdapter storageAdapter = await StorageAdapterFakeFactory.CreateInMemoryStorageAdapterAsync(storageAdapterInitializer);
+            
             var targetEvaluateeModel = new EvaluateeModel(new EmployeeModel { Number = 101, Name = "John Doe" });
             var evaluationPeriodModel = new EvaluationPeriodModel { TimeZoneInfo = TimeZoneInfo.Local, StartDate = new DateTime(DateTime.Today.Year, 1, 1), EndDate = new DateTime(DateTime.Today.Year, 12, 31) };
             var useCase = new AddNewEvaluationToEvaluatee(storageAdapter, targetEvaluateeModel, evaluationPeriodModel);
@@ -98,6 +99,9 @@ namespace Rang.SkillTracking.Tests.xUnit.IntegrationTests
             // assert
             Assert.Equal(UseCaseResultStatusCode.Success, result.StatusCode);
             Assert.Single(result.OutputModel.EvaluationModels);
+            Assert.Equal("101", result.OutputModel.EvaluationModels.First().EvaluateeModel.EmployeeNumber.ToString());
+            Assert.Equal(new DateTime(DateTime.Today.Year, 1, 1), result.OutputModel.EvaluationModels.First().EvaluationPeriodModel.StartDate.Date);
+            Assert.Equal(new DateTime(DateTime.Today.Year, 12, 31), result.OutputModel.EvaluationModels.First().EvaluationPeriodModel.EndDate.Date);
         }
     }
 }

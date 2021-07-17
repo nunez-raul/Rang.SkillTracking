@@ -9,26 +9,26 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
     public class AddNewEvaluationToEvaluatee: StorageDependentUseCase
     {
         // fileds
-        private readonly EvaluateeModel _evaluateeModel;
+        private readonly EvaluateeModel _targetEvaluateeModel;
         private readonly EvaluationPeriodModel _evaluationPeriodModel;
 
         // properties
-        public Evaluatee Evaluatee { get; private set; }
-        public Evaluation Evaluation { get; private set; }
-
-
+        public Evaluatee LoadedEvaluatee { get; private set; }
+      
         // constructors
-        public AddNewEvaluationToEvaluatee(IStorageAdapter storageAdapter, EvaluateeModel evaluateeModel, EvaluationPeriodModel evaluationPeriodModel)
+        public AddNewEvaluationToEvaluatee(IStorageAdapter storageAdapter, EvaluateeModel targetEvaluateeModel, EvaluationPeriodModel evaluationPeriodModel)
             : base(storageAdapter)
         {
-            _evaluateeModel = evaluateeModel ?? throw new ArgumentNullException(nameof(evaluateeModel));
+            _targetEvaluateeModel = targetEvaluateeModel ?? throw new ArgumentNullException(nameof(targetEvaluateeModel));
             _evaluationPeriodModel = evaluationPeriodModel ?? throw new ArgumentNullException(nameof(evaluationPeriodModel));
         }
 
         // methods
         public async Task<UseCaseResult<EvaluateeModel>>  RunAsync()
         {
-            if (!ValidateModels())
+            var targetEvaluatee = new Evaluatee(_targetEvaluateeModel);
+
+            if (! targetEvaluatee.IsValid)
                 return CreateInvalidInputModelsResult();
 
             if (!await LoadEvaluateeByEmployeeModel())
@@ -38,25 +38,19 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
             if (evaluationPeriod == null)
                 throw new NotImplementedException(); // <-- what to return here?
 
-            var result = Evaluatee.AddNewEvaluation(evaluationPeriod);
+            var result = LoadedEvaluatee.AddNewEvaluation(evaluationPeriod);
             if (result.OperationStatusCode != Domain.Common.OperationStatusCode.Success)
                 throw new NotImplementedException(); // <-- what to return here?
 
-            var evaluateeModel = await _storageAdapter.SaveEvaluateeAsync(Evaluatee);
+            var evaluateeModel = await _storageAdapter.SaveEvaluateeAsync(LoadedEvaluatee);
             return CreateSucessResult(evaluateeModel.GetModel());
-        }
-
-        private bool ValidateModels()
-        {
-            
-            return true;
         }
 
         private async Task<bool> LoadEvaluateeByEmployeeModel()
         {
-            Evaluatee = await _storageAdapter.GetEvaluateeByEmployeeNumberAsync(_evaluateeModel.EmployeeModel.Number);
+            LoadedEvaluatee = await _storageAdapter.GetEvaluateeByEmployeeNumberAsync(_targetEvaluateeModel.EmployeeModel.Number);
 
-            if (Evaluatee == null)
+            if (LoadedEvaluatee == null)
                 return false;
            return true;
         }
@@ -71,7 +65,7 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
             return new UseCaseResult<EvaluateeModel>
             {
                 StatusCode = UseCaseResultStatusCode.InvalidInputModel,
-                OutputModel = _evaluateeModel
+                OutputModel = _targetEvaluateeModel
             };
         }
 
@@ -80,7 +74,7 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
             return new UseCaseResult<EvaluateeModel>
             {
                 StatusCode = UseCaseResultStatusCode.NotFoundInputModel,
-                OutputModel = _evaluateeModel
+                OutputModel = _targetEvaluateeModel
             };
         }
 
