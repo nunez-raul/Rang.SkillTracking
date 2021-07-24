@@ -9,30 +9,35 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
     public class AddNewEvaluationToEvaluatee: StorageDependentUseCase
     {
         // fileds
-        private readonly EvaluateeModel _targetEvaluateeModel;
+        private readonly IPresenterAdapter _presenterAdapter;
+        private readonly uint _employeeNumber;
         private readonly EvaluationPeriodModel _evaluationPeriodModel;
 
         // properties
         public Evaluatee LoadedEvaluatee { get; private set; }
-      
+        private UseCaseResult<EvaluateeModel> EvaluateeNotFoundResult { get => 
+                new UseCaseResult<EvaluateeModel> {
+                    StatusCode = UseCaseResultStatusCode.EvaluateeNotFound,
+                    OutputModel = null};
+        }
+
         // constructors
-        public AddNewEvaluationToEvaluatee(IStorageAdapter storageAdapter, EvaluateeModel targetEvaluateeModel, EvaluationPeriodModel evaluationPeriodModel)
+        public AddNewEvaluationToEvaluatee(IStorageAdapter storageAdapter, IPresenterAdapter presenterAdapter, uint employeeNumberOfEvaluatee, EvaluationPeriodModel evaluationPeriodModel)
             : base(storageAdapter)
         {
-            _targetEvaluateeModel = targetEvaluateeModel ?? throw new ArgumentNullException(nameof(targetEvaluateeModel));
+            _presenterAdapter = presenterAdapter ?? throw new ArgumentNullException(nameof(presenterAdapter));
+            _employeeNumber = employeeNumberOfEvaluatee;
             _evaluationPeriodModel = evaluationPeriodModel ?? throw new ArgumentNullException(nameof(evaluationPeriodModel));
         }
 
         // methods
         public async Task<UseCaseResult<EvaluateeModel>>  RunAsync()
         {
-            var targetEvaluatee = new Evaluatee(_targetEvaluateeModel);
+            if (_employeeNumber <  1)
+                throw new NotImplementedException(); // <-- what to return here?
 
-            if (! targetEvaluatee.IsValid)
-                return CreateInvalidInputModelsResult();
-
-            if (!await LoadEvaluateeByEmployeeModel())
-                return CreateNotFoundInputModelResult();
+            if (!await LoadEvaluateeBySuppliedEmployeeNumber())
+                return EvaluateeNotFoundResult;
 
             var evaluationPeriod = await GetEvaluationPeriodByEvaluationPeriodModel();
             if (evaluationPeriod == null)
@@ -46,9 +51,9 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
             return CreateSucessResult(evaluateeModel.GetModel());
         }
 
-        private async Task<bool> LoadEvaluateeByEmployeeModel()
+        private async Task<bool> LoadEvaluateeBySuppliedEmployeeNumber()
         {
-            LoadedEvaluatee = await _storageAdapter.GetEvaluateeByEmployeeNumberAsync(_targetEvaluateeModel.EmployeeModel.Number);
+            LoadedEvaluatee = await _storageAdapter.GetEvaluateeByEmployeeNumberAsync(_employeeNumber);
 
             if (LoadedEvaluatee == null)
                 return false;
@@ -60,26 +65,9 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
             return await _storageAdapter.GetEvaluationPeriodByStartDateAsync(_evaluationPeriodModel.TimeZoneInfo, _evaluationPeriodModel.StartDate);
         }
 
-        private UseCaseResult<EvaluateeModel> CreateInvalidInputModelsResult()
-        {
-            return new UseCaseResult<EvaluateeModel>
-            {
-                StatusCode = UseCaseResultStatusCode.InvalidInputModel,
-                OutputModel = _targetEvaluateeModel
-            };
-        }
-
-        private UseCaseResult<EvaluateeModel> CreateNotFoundInputModelResult()
-        {
-            return new UseCaseResult<EvaluateeModel>
-            {
-                StatusCode = UseCaseResultStatusCode.NotFoundInputModel,
-                OutputModel = _targetEvaluateeModel
-            };
-        }
-
         private UseCaseResult<EvaluateeModel> CreateSucessResult(EvaluateeModel outputModel)
         {
+            _presenterAdapter.PresentSuccessOperationMessage("evaluation added successfully");
             return new UseCaseResult<EvaluateeModel>
             {
                 StatusCode = UseCaseResultStatusCode.Success,

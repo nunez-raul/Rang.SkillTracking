@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Rang.SkillTracking.Tests.xUnit.TestDoubles
 {
-    public static class StorageAdapterFakeFactory
+    internal static class StorageAdapterFakeFactory
     {
-        public static async Task<IStorageAdapter> CreateInMemoryStorageAdapterAsync(StorageAdapterInitializer storageAdapterInitializer = null)
+        internal static async Task<IStorageAdapter> CreateInMemoryStorageAdapterAsync(StorageAdapterInitializer storageAdapterInitializer = null)
         {
             return await StorageAdapterFactory.CreateNewStorageAdapterAsync(GetInMemoryOptions(), storageAdapterInitializer);
         }

@@ -11,6 +11,6 @@ namespace Rang.SkillTracking.Application.Common
         NotSet,
         Success,
         InvalidInputModel,
-        NotFoundInputModel
+        EvaluateeNotFound
     }
 }
