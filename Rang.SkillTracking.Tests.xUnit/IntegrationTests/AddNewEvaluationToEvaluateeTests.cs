@@ -56,7 +56,7 @@ namespace Rang.SkillTracking.Tests.xUnit.IntegrationTests
         }
 
         [Fact]
-        public async Task ShouldReturnNotFoundInputModelWhenAddNewEvaluationToEvaluateeIfEmployeeDoesNotExistInStorage()
+        public async Task ShouldReturnEvaluateeNotFoundWhenAddNewEvaluationToEvaluateeIfEmployeeDoesNotExistInStorage()
         {
             // arrange
             IStorageAdapter storageAdapter = await StorageAdapterFakeFactory .CreateInMemoryStorageAdapterAsync();

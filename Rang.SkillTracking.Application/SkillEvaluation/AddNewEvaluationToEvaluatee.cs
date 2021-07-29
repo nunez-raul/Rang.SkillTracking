@@ -15,10 +15,12 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
 
         // properties
         public Evaluatee LoadedEvaluatee { get; private set; }
-        private UseCaseResult<EvaluateeModel> EvaluateeNotFoundResult { get => 
-                new UseCaseResult<EvaluateeModel> {
-                    StatusCode = UseCaseResultStatusCode.EvaluateeNotFound,
-                    OutputModel = null};
+        public EvaluationPeriod LoadedEvaluationPeriod { get; private set; }
+        private UseCaseResult<EvaluateeModel> EvaluateeNotFoundResult { get => new()
+            { StatusCode = UseCaseResultStatusCode.EvaluateeNotFound, OutputModel = null };
+        }
+        private UseCaseResult<EvaluateeModel> EvaluationPeriodNotFoundResult { get => new()
+            { StatusCode = UseCaseResultStatusCode.EvaluationPeriodNotFound, OutputModel = null };
         }
 
         // constructors
@@ -36,14 +38,13 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
             if (_employeeNumber <  1)
                 throw new NotImplementedException(); // <-- what to return here?
 
-            if (!await LoadEvaluateeBySuppliedEmployeeNumber())
+            if (!await LoadEvaluateeFromStorageByItsEmployeeNumber())
                 return EvaluateeNotFoundResult;
 
-            var evaluationPeriod = await GetEvaluationPeriodByEvaluationPeriodModel();
-            if (evaluationPeriod == null)
-                throw new NotImplementedException(); // <-- what to return here?
+            if (!await LoadEvaluationPeriodFromStorageByEvaluationPeriodModel())
+                return EvaluationPeriodNotFoundResult;
 
-            var result = LoadedEvaluatee.AddNewEvaluation(evaluationPeriod);
+            var result = LoadedEvaluatee.AddNewEvaluation(LoadedEvaluationPeriod);
             if (result.OperationStatusCode != Domain.Common.OperationStatusCode.Success)
                 throw new NotImplementedException(); // <-- what to return here?
 
@@ -51,7 +52,7 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
             return CreateSucessResult(evaluateeModel.GetModel());
         }
 
-        private async Task<bool> LoadEvaluateeBySuppliedEmployeeNumber()
+        private async Task<bool> LoadEvaluateeFromStorageByItsEmployeeNumber()
         {
             LoadedEvaluatee = await _storageAdapter.GetEvaluateeByEmployeeNumberAsync(_employeeNumber);
 
@@ -60,9 +61,13 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
            return true;
         }
 
-        private async Task<EvaluationPeriod> GetEvaluationPeriodByEvaluationPeriodModel()
+        private async Task<bool> LoadEvaluationPeriodFromStorageByEvaluationPeriodModel()
         {
-            return await _storageAdapter.GetEvaluationPeriodByStartDateAsync(_evaluationPeriodModel.TimeZoneInfo, _evaluationPeriodModel.StartDate);
+            LoadedEvaluationPeriod = await _storageAdapter.GetEvaluationPeriodByStartDateAsync(_evaluationPeriodModel.TimeZoneInfo, _evaluationPeriodModel.StartDate);
+
+            if (LoadedEvaluationPeriod == null)
+                return false;
+            return true;
         }
 
         private UseCaseResult<EvaluateeModel> CreateSucessResult(EvaluateeModel outputModel)
