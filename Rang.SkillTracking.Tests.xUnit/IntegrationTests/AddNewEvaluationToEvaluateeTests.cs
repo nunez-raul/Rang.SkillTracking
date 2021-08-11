@@ -29,11 +29,9 @@ namespace Rang.SkillTracking.Tests.xUnit.IntegrationTests
             // arrange
             IStorageAdapter storageAdapter = null;
             IPresenterAdapter presenterAdapter = PresenterAdapterFakeFactory.CreatePresenterAdapterForTestOutput(_output);
-            uint employeeNumberofEvaluatee = 101;
-            var evaluationPeriodModel = new EvaluationPeriodModel { TimeZoneInfo = TimeZoneInfo.Local, StartDate = new DateTime(DateTime.Today.Year, 1, 1), EndDate = new DateTime(DateTime.Today.Year, 12, 31) };         
-
+            
             // act
-            void action() => new AddNewEvaluationToEvaluatee(storageAdapter, presenterAdapter, employeeNumberofEvaluatee, evaluationPeriodModel);
+            void action() => new AddNewEvaluationToEvaluateeUseCase(storageAdapter, presenterAdapter);
 
             // assert
             Assert.Throws<ArgumentNullException>(action);
@@ -45,14 +43,15 @@ namespace Rang.SkillTracking.Tests.xUnit.IntegrationTests
             // arrange
             IStorageAdapter storageAdapter = await StorageAdapterFakeFactory.CreateInMemoryStorageAdapterAsync();
             IPresenterAdapter presenterAdapter = PresenterAdapterFakeFactory.CreatePresenterAdapterForTestOutput(_output);
+            var useCase = new AddNewEvaluationToEvaluateeUseCase(storageAdapter, presenterAdapter);
             uint employeeNumberofEvaluatee = 101;
             EvaluationPeriodModel evaluationPeriodModel = null;
 
             // act
-            void action() => new AddNewEvaluationToEvaluatee(storageAdapter, presenterAdapter, employeeNumberofEvaluatee, evaluationPeriodModel);
+            Task action() => useCase.AddNewEvaluationToEvaluateeAsync(employeeNumberofEvaluatee, evaluationPeriodModel);
 
             // assert
-            Assert.Throws<ArgumentNullException>(action);
+            Assert.ThrowsAsync<ArgumentNullException>(action);
         }
 
         [Fact]
@@ -63,10 +62,10 @@ namespace Rang.SkillTracking.Tests.xUnit.IntegrationTests
             IPresenterAdapter presenterAdapter = PresenterAdapterFakeFactory.CreatePresenterAdapterForTestOutput(_output);
             uint employeeNumberofEvaluatee = 101;
             var evaluationPeriodModel = new EvaluationPeriodModel { TimeZoneInfo = TimeZoneInfo.Local, StartDate = new DateTime(DateTime.Today.Year, 1, 1) , EndDate = new DateTime(DateTime.Today.Year, 12, 31) };
-            var useCase = new AddNewEvaluationToEvaluatee(storageAdapter, presenterAdapter, employeeNumberofEvaluatee, evaluationPeriodModel);
+            var useCase = new AddNewEvaluationToEvaluateeUseCase(storageAdapter, presenterAdapter);
 
             // act
-            var result = await useCase.RunAsync();
+            var result = await useCase.AddNewEvaluationToEvaluateeAsync(employeeNumberofEvaluatee, evaluationPeriodModel);
 
             // assert
             Assert.Equal(UseCaseResultStatusCode.EvaluateeNotFound, result.StatusCode);
@@ -85,10 +84,10 @@ namespace Rang.SkillTracking.Tests.xUnit.IntegrationTests
             IPresenterAdapter presenterAdapter = PresenterAdapterFakeFactory.CreatePresenterAdapterForTestOutput(_output);
             uint employeeNumberofEvaluatee = 101;
             var evaluationPeriodModel = new EvaluationPeriodModel { TimeZoneInfo = TimeZoneInfo.Local, StartDate = new DateTime(DateTime.Today.Year, 1, 1), EndDate = new DateTime(DateTime.Today.Year, 12, 31) };
-            var useCase = new AddNewEvaluationToEvaluatee(storageAdapter, presenterAdapter, employeeNumberofEvaluatee, evaluationPeriodModel);
+            var useCase = new AddNewEvaluationToEvaluateeUseCase(storageAdapter, presenterAdapter);
 
             // act
-            var result = await useCase.RunAsync();
+            var result = await useCase.AddNewEvaluationToEvaluateeAsync(employeeNumberofEvaluatee, evaluationPeriodModel);
 
             // assert
             Assert.NotNull(((PresenterAdapterForTestOutput)presenterAdapter).SuccessMessage);

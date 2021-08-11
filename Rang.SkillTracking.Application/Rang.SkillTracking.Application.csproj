@@ -8,8 +8,4 @@
     <ProjectReference Include="..\Rang.SkillTracking.Domain\Rang.SkillTracking.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Boundary.Input\" />
-  </ItemGroup>
-
 </Project>
