@@ -3,7 +3,7 @@ using Xunit.Abstractions;
 
 namespace Rang.SkillTracking.Tests.xUnit.TestDoubles.Fakes
 {
-    internal class PresenterAdapterForTestOutput : IPresenterAdapter
+    internal class PresenterAdapterForTestOutput : IPresenterPort
     {
         // fields
         ITestOutputHelper _testOutput;

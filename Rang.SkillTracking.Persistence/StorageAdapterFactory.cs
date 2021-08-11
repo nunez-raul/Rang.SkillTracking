@@ -10,7 +10,7 @@ namespace Rang.SkillTracking.Persistence
 {
     public static class StorageAdapterFactory
     {
-        public static async Task<IStorageAdapter> CreateNewStorageAdapterAsync(DbContextOptions<SkillTrackingDbContext> contextOptions, StorageAdapterInitializer storageAdapterInitializer = null)
+        public static async Task<IStoragePort> CreateNewStorageAdapterAsync(DbContextOptions<SkillTrackingDbContext> contextOptions, StorageAdapterInitializer storageAdapterInitializer = null)
         {
             var skillTrackingDbContext = new SkillTrackingDbContext(contextOptions);
 

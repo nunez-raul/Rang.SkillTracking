@@ -27,8 +27,8 @@ namespace Rang.SkillTracking.Tests.xUnit.IntegrationTests
         public void ShouldThrowArgumentNullExceptionWhenCreateInstanceOfAddNewEvaluationToEvaluateeIfStorageIsNull()
         {
             // arrange
-            IStorageAdapter storageAdapter = null;
-            IPresenterAdapter presenterAdapter = PresenterAdapterFakeFactory.CreatePresenterAdapterForTestOutput(_output);
+            IStoragePort storageAdapter = null;
+            IPresenterPort presenterAdapter = PresenterAdapterFakeFactory.CreatePresenterAdapterForTestOutput(_output);
             
             // act
             void action() => new AddNewEvaluationToEvaluateeUseCase(storageAdapter, presenterAdapter);
@@ -41,8 +41,8 @@ namespace Rang.SkillTracking.Tests.xUnit.IntegrationTests
         public async Task ShouldThrowArgumentNullExceptionWhenCreateInstanceOfAddNewEvaluationToEvaluateeIfEvaluationPeriodModelIsNull()
         {
             // arrange
-            IStorageAdapter storageAdapter = await StorageAdapterFakeFactory.CreateInMemoryStorageAdapterAsync();
-            IPresenterAdapter presenterAdapter = PresenterAdapterFakeFactory.CreatePresenterAdapterForTestOutput(_output);
+            IStoragePort storageAdapter = await StorageAdapterFakeFactory.CreateInMemoryStorageAdapterAsync();
+            IPresenterPort presenterAdapter = PresenterAdapterFakeFactory.CreatePresenterAdapterForTestOutput(_output);
             var useCase = new AddNewEvaluationToEvaluateeUseCase(storageAdapter, presenterAdapter);
             uint employeeNumberofEvaluatee = 101;
             EvaluationPeriodModel evaluationPeriodModel = null;
@@ -58,8 +58,8 @@ namespace Rang.SkillTracking.Tests.xUnit.IntegrationTests
         public async Task ShouldReturnEvaluateeNotFoundWhenAddNewEvaluationToEvaluateeIfEmployeeDoesNotExistInStorage()
         {
             // arrange
-            IStorageAdapter storageAdapter = await StorageAdapterFakeFactory .CreateInMemoryStorageAdapterAsync();
-            IPresenterAdapter presenterAdapter = PresenterAdapterFakeFactory.CreatePresenterAdapterForTestOutput(_output);
+            IStoragePort storageAdapter = await StorageAdapterFakeFactory .CreateInMemoryStorageAdapterAsync();
+            IPresenterPort presenterAdapter = PresenterAdapterFakeFactory.CreatePresenterAdapterForTestOutput(_output);
             uint employeeNumberofEvaluatee = 101;
             var evaluationPeriodModel = new EvaluationPeriodModel { TimeZoneInfo = TimeZoneInfo.Local, StartDate = new DateTime(DateTime.Today.Year, 1, 1) , EndDate = new DateTime(DateTime.Today.Year, 12, 31) };
             var useCase = new AddNewEvaluationToEvaluateeUseCase(storageAdapter, presenterAdapter);
@@ -80,8 +80,8 @@ namespace Rang.SkillTracking.Tests.xUnit.IntegrationTests
                 Employees = new Employee[] { new Employee(101, "John Doe") },
                 EvaluationPeriods = new EvaluationPeriod[] { new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1), new DateTime(DateTime.Today.Year, 12, 31)) }
             };
-            IStorageAdapter storageAdapter = await StorageAdapterFakeFactory.CreateInMemoryStorageAdapterAsync(storageAdapterInitializer);
-            IPresenterAdapter presenterAdapter = PresenterAdapterFakeFactory.CreatePresenterAdapterForTestOutput(_output);
+            IStoragePort storageAdapter = await StorageAdapterFakeFactory.CreateInMemoryStorageAdapterAsync(storageAdapterInitializer);
+            IPresenterPort presenterAdapter = PresenterAdapterFakeFactory.CreatePresenterAdapterForTestOutput(_output);
             uint employeeNumberofEvaluatee = 101;
             var evaluationPeriodModel = new EvaluationPeriodModel { TimeZoneInfo = TimeZoneInfo.Local, StartDate = new DateTime(DateTime.Today.Year, 1, 1), EndDate = new DateTime(DateTime.Today.Year, 12, 31) };
             var useCase = new AddNewEvaluationToEvaluateeUseCase(storageAdapter, presenterAdapter);

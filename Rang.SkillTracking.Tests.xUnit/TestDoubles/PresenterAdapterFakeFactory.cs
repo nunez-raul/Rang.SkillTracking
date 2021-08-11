@@ -6,7 +6,7 @@ namespace Rang.SkillTracking.Tests.xUnit.TestDoubles
 {
     internal static class PresenterAdapterFakeFactory
     {
-        internal static IPresenterAdapter CreatePresenterAdapterForTestOutput(ITestOutputHelper testOutput)
+        internal static IPresenterPort CreatePresenterAdapterForTestOutput(ITestOutputHelper testOutput)
         {
             return new PresenterAdapterForTestOutput(testOutput);
         }

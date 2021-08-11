@@ -10,7 +10,7 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
     public class AddNewEvaluationToEvaluateeUseCase: StorageDependentUseCase, IAdministratorPort
     {
         // fileds
-        private readonly IPresenterAdapter _presenterAdapter;
+        private readonly IPresenterPort _presenterAdapter;
         
         // properties
         public Evaluatee LoadedEvaluatee { get; private set; }
@@ -23,7 +23,7 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
         }
 
         // constructors
-        public AddNewEvaluationToEvaluateeUseCase(IStorageAdapter storageAdapter, IPresenterAdapter presenterAdapter)
+        public AddNewEvaluationToEvaluateeUseCase(IStoragePort storageAdapter, IPresenterPort presenterAdapter)
             : base(storageAdapter)
         {
             _presenterAdapter = presenterAdapter ?? throw new ArgumentNullException(nameof(presenterAdapter));

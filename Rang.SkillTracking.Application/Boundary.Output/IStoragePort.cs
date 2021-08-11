@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Rang.SkillTracking.Application.Boundary.Output
 {
-    public interface IStorageAdapter
+    public interface IStoragePort
     {
         // read operations
         Task<Evaluatee> GetEvaluateeByEmployeeNumberAsync(uint employeeNumber);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Rang.SkillTracking.Persistence
 {
-    public class StorageAdapter: IStorageAdapter
+    public class StorageAdapter: IStoragePort
     {
         // fields
         protected SkillTrackingDbContext _skillTrackingDbContext;

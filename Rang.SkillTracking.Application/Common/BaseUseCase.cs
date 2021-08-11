@@ -21,12 +21,12 @@ namespace Rang.SkillTracking.Application.Common
     public abstract class StorageDependentUseCase : BaseUseCase
     {
         // fields
-        protected IStorageAdapter _storageAdapter;
+        protected IStoragePort _storageAdapter;
 
         // properties
 
         // constructors
-        public StorageDependentUseCase(IStorageAdapter storageAdapter)
+        public StorageDependentUseCase(IStoragePort storageAdapter)
         {
             _storageAdapter = storageAdapter ?? throw new ArgumentNullException(nameof(storageAdapter));
         }

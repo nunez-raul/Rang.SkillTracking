@@ -9,7 +9,7 @@ namespace Rang.SkillTracking.Tests.xUnit.TestDoubles
 {
     internal static class StorageAdapterFakeFactory
     {
-        internal static async Task<IStorageAdapter> CreateInMemoryStorageAdapterAsync(StorageAdapterInitializer storageAdapterInitializer = null)
+        internal static async Task<IStoragePort> CreateInMemoryStorageAdapterAsync(StorageAdapterInitializer storageAdapterInitializer = null)
         {
             return await StorageAdapterFactory.CreateNewStorageAdapterAsync(GetInMemoryOptions(), storageAdapterInitializer);
         }
