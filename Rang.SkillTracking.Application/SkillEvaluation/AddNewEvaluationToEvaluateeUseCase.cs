@@ -1,5 +1,4 @@
-﻿using Rang.SkillTracking.Application.Boundary.Input;
-using Rang.SkillTracking.Application.Boundary.Output;
+﻿using Rang.SkillTracking.Application.Boundary.Output;
 using Rang.SkillTracking.Application.Common;
 using Rang.SkillTracking.Domain.Skills;
 using System;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Rang.SkillTracking.Application.SkillEvaluation
 {
-    public class AddNewEvaluationToEvaluateeUseCase: StorageDependentUseCase, IAdministratorPort
+    internal class AddNewEvaluationToEvaluateeUseCase: StorageDependentUseCase
     {
         // fileds
         private readonly IPresenterPort _presenterAdapter;
@@ -30,7 +29,7 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
         }
 
         // methods
-        public async Task<UseCaseResult<EvaluateeModel>>  AddNewEvaluationToEvaluateeAsync(uint employeeNumberOfEvaluatee, EvaluationPeriodModel evaluationPeriodModel)
+        public async Task<UseCaseResult<EvaluateeModel>>  RunAsync(uint employeeNumberOfEvaluatee, EvaluationPeriodModel evaluationPeriodModel)
         {
             if(evaluationPeriodModel == null)
                 throw new ArgumentNullException(nameof(evaluationPeriodModel));

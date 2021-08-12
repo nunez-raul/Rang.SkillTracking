@@ -63,5 +63,16 @@ namespace Rang.SkillTracking.Persistence
 
             return evaluatee;
         }
+
+        public async Task<EvaluationPeriod> AddNewEvaluationPeriodAsync(EvaluationPeriod evaluationPeriod)
+        {
+            var evaluationPeriodModel = evaluationPeriod.GetModel();
+
+            await _skillTrackingDbContext.EvaluationPeriodInUctModelSet.AddAsync(evaluationPeriodModel);
+            await _skillTrackingDbContext.SaveChangesAsync()
+                .ConfigureAwait(false);
+
+            return evaluationPeriod;
+        }
     }
 }

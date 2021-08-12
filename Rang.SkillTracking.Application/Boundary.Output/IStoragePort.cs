@@ -12,5 +12,6 @@ namespace Rang.SkillTracking.Application.Boundary.Output
 
         // write operations
         Task<Evaluatee> SaveEvaluateeAsync(Evaluatee evaluatee);
+        Task<EvaluationPeriod> AddNewEvaluationPeriodAsync(EvaluationPeriod evaluationPeriod);
     }
 }
