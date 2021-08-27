@@ -138,15 +138,15 @@ namespace Rang.SkillTracking.Tests.xUnit.IntegrationTests
             IPresenterPort presenterAdapter = PresenterAdapterFakeFactory.CreatePresenterAdapterForTestOutput(_output);
             IAdministratorPort interactor = new AdministratorInteractor(storageAdapter, presenterAdapter);
 
-            uint employeeNumberofEvaluatee = 102;
-            var evaluationPeriodModel = new EvaluationPeriodModel { TimeZoneInfo = TimeZoneInfo.Local, StartDate = new DateTime(DateTime.Today.Year, 1, 1), EndDate = new DateTime(DateTime.Today.Year, 12, 31) };
+            uint employeeNumberofEvaluatee = 101;
+            EvaluationPeriodModel evaluationPeriodModel = null;
 
 
             // act
-            Task action() => interactor.AddNewEvaluationToEvaluateeAsync(employeeNumberofEvaluatee, evaluationPeriodModel);
+            Task<UseCaseResult<EvaluateeModel>> action() => interactor.AddNewEvaluationToEvaluateeAsync(employeeNumberofEvaluatee, evaluationPeriodModel);
 
             // assert
-            Assert.ThrowsAsync<ArgumentNullException>(action);
+            await Assert.ThrowsAsync<ArgumentNullException>(action);
         }
 
     }

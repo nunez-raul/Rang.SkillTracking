@@ -34,8 +34,17 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
 
             //add to storage
             var result = await _storageAdapter.AddNewEvaluationPeriodAsync(evaluationPeriodToAdd);
-            _presenterAdapter.PresentSuccessOperationMessage($"The evaluation period ({evaluationPeriodToAdd.StartDate.ToShortDateString()} - {evaluationPeriodToAdd.EndDate.ToShortDateString()}) was added successfully.");
+
+            // add period to all active evaluatees
+
+            // Notify success
+            PresentSuccessMessage(evaluationPeriodToAdd);
             return CreateSucessResult(result.GetModel());
+        }
+
+        private void PresentSuccessMessage(EvaluationPeriod evaluationPeriodAdded)
+        {
+            _presenterAdapter.PresentSuccessOperationMessage($"The evaluation period ({evaluationPeriodAdded.StartDate.ToShortDateString()} - {evaluationPeriodAdded.EndDate.ToShortDateString()}) was added successfully.");
         }
 
         private UseCaseResult<EvaluationPeriodModel> CreateSucessResult(EvaluationPeriodModel outputModel)
