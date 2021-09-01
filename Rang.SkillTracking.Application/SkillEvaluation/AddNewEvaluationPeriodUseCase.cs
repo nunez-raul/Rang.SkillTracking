@@ -2,6 +2,8 @@
 using Rang.SkillTracking.Application.Common;
 using Rang.SkillTracking.Domain.Skills;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Rang.SkillTracking.Application.SkillEvaluation
@@ -28,9 +30,19 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
 
             var evaluationPeriodToAdd = new EvaluationPeriod(evaluationPeriodModel.TimeZoneInfo, evaluationPeriodModel.StartDate, evaluationPeriodModel.EndDate);
             if (!evaluationPeriodToAdd.IsValid)
-                throw new NotFiniteNumberException(); //<-- what to return here?
+                throw new NotImplementedException(); //<-- ToDo: what to return here?
 
             //check overlap in storage
+            var overlapList = await _storageAdapter.GetEvaluationPeriodsThatOverlapWithAsync(evaluationPeriodModel.TimeZoneInfo, evaluationPeriodToAdd);
+            if (overlapList.Any())
+            {
+                _presenterAdapter.PresentMessage($"The evaluation period ({evaluationPeriodModel.StartDate.ToShortDateString()} - {evaluationPeriodModel.EndDate.ToShortDateString()}) was not added because it overlaps with another existing period");
+                return new UseCaseResult<EvaluationPeriodModel>
+                {
+                    StatusCode = UseCaseResultStatusCode.EvaluationPeriodOverlap,
+                    OutputModel = null //<-- ToDo: Shouldn't we return the list?
+                };
+            }
 
             //add to storage
             var result = await _storageAdapter.AddNewEvaluationPeriodAsync(evaluationPeriodToAdd);

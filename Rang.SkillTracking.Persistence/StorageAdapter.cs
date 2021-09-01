@@ -4,6 +4,7 @@ using Rang.SkillTracking.Application.Common;
 using Rang.SkillTracking.Domain.Skills;
 using Rang.SkillTracking.Persistence.Ef.Context;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -47,6 +48,15 @@ namespace Rang.SkillTracking.Persistence
                 return null;
 
             return new EvaluationPeriod(evaluationPeriodInUtcDataModel, targetTimeZoneInfo);
+        }
+
+        public async Task<IEnumerable<EvaluationPeriod>> GetEvaluationPeriodsThatOverlapWithAsync(TimeZoneInfo targetTimeZoneInfo, EvaluationPeriod evaluationPeriod)
+        {
+               var overlappingPeriods = await _skillTrackingDbContext.EvaluationPeriodInUctModelSet
+                .Where(existingPeriod => existingPeriod.StartDateInUtc < evaluationPeriod.EndDateInUtc && existingPeriod.EndDateInUtc > evaluationPeriod.StartDateInUtc)
+                .ToListAsync();
+
+            return overlappingPeriods.Select(opm => new EvaluationPeriod(opm, targetTimeZoneInfo)).ToList();
         }
 
         public async Task<Evaluatee>  SaveEvaluateeAsync(Evaluatee evaluatee)

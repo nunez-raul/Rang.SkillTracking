@@ -49,6 +49,8 @@ namespace Rang.SkillTracking.Domain.Skills
 
         protected override bool ValidateMe()
         {
+            if (StartDateInUtc >= EndDateInUtc)
+                return false;
             return true;
         }
     }

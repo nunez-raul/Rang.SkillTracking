@@ -6,6 +6,7 @@
         Success,
         InvalidInputModel,
         EvaluateeNotFound,
-        EvaluationPeriodNotFound
+        EvaluationPeriodNotFound,
+        EvaluationPeriodOverlap
     }
 }
