@@ -4,7 +4,6 @@ using Rang.SkillTracking.Application.Common;
 using Rang.SkillTracking.Application.SkillEvaluation;
 using Rang.SkillTracking.Domain.Skills;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Rang.SkillTracking.Application

@@ -398,6 +398,27 @@ namespace Rang.SkillTracking.Tests.xUnit.IntegrationTests
             Assert.Equal(UseCaseResultStatusCode.EvaluationPeriodOverlap, result.StatusCode);
         }
 
+        [Fact]
+        public async Task ShouldThrowArgumentNullExceptionWhenAddNewEvaluationPeriodIfEvaluationPeriodModelIsNull()
+        {
+            // arrange
+            StorageAdapterInitializer storageAdapterInitializer = new()
+            {
+                //current year
+                EvaluationPeriods = new EvaluationPeriod[] { new EvaluationPeriod(TimeZoneInfo.Local, new DateTime(DateTime.Today.Year, 1, 1, 0, 0, 0, 0), new DateTime(DateTime.Today.Year, 12, 31, 23, 59, 59, 999)) }
+            };
+            IStoragePort storageAdapter = await StorageAdapterFakeFactory.CreateInMemoryStorageAdapterAsync(storageAdapterInitializer);
+            IPresenterPort presenterAdapter = PresenterAdapterFakeFactory.CreatePresenterAdapterForTestOutput(_output);
+            IAdministratorPort interactor = new AdministratorInteractor(storageAdapter, presenterAdapter);
+            EvaluationPeriodModel evaluationPeriodModel = null;
+
+            // act
+            Task<UseCaseResult<EvaluationPeriodModel>> action() => interactor.AddNewEvaluationPeriodAsync(evaluationPeriodModel);
+
+            // assert
+            await Assert.ThrowsAsync<ArgumentNullException>(action);
+        }
+
         // AddNewEvaluationToEvaluatee
         [Fact]
         public async Task ShouldAddNewEvaluationToEvaluateeAsync()

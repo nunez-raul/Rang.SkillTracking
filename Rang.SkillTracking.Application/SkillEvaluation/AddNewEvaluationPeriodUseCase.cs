@@ -46,8 +46,6 @@ namespace Rang.SkillTracking.Application.SkillEvaluation
             //add to storage
             var result = await _storageAdapter.AddNewEvaluationPeriodAsync(evaluationPeriodToAdd);
 
-            // add period to all active evaluatees
-
             // Notify success
             PresentSuccessMessage(evaluationPeriodToAdd);
             return CreateSucessResult(result.GetModel());
